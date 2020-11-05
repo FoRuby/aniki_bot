@@ -23,7 +23,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass
+  config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -61,6 +61,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "aniki_bot_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { host: 'gachibuhgalter-bot.herokuapp.com' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -109,4 +110,10 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  routes.default_url_options = {host: 'gachibuhgalter-bot.herokuapp.com', protocol: 'https'}
+
+  # Configure session store for telegram bot.
+  config.telegram_updates_controller.session_store = :file_store,
+    Rails.root.join('tmp', 'session_store')
 end
