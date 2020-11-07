@@ -1,5 +1,7 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
+  include Telegram::Bot::UpdatesController::Session
+  include CallbackQueryContext
 
   include BaseController
   include InfosController
@@ -7,6 +9,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include EventsController
   include UsersController
   include NotesController
+
+  use_session!
 
   def current_user
     @current_user = User::Create.call(user_attributes: from).user
@@ -19,11 +23,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
-
-  # def help!(*)
-  #   respond_with :message, text: t('.content')
-  # end
-  #
   # def memo!(*args)
   #   if args.any?
   #     session[:memo] = args.join(' ')
@@ -60,14 +59,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   #       [
   #         {text: t('.alert'), callback_data: 'alert'},
   #         {text: t('.no_alert'), callback_data: 'no_alert'},
-  #         {text: 'tfff', callback_data: 'no_alert'},
-  #         {text: 'vvvvv', callback_data: 'no_alert'}
-  #       ],
-  #       [{text: t('.repo'), url: 'https://github.com/telegram-bot-rb/telegram-bot'}],
-  #     ],
+  #       ]
+  #     ]
   #   }
   # end
-  #
   # def callback_query(data)
   #   if data == 'alert'
   #     answer_callback_query t('.alert'), show_alert: true
@@ -108,5 +103,5 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   #     respond_with :message, text: t('.prompt')
   #   end
   # end
-  #
+
 end

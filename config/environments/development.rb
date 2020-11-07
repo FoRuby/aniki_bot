@@ -61,5 +61,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Use memory store for bot sessions.
-  config.telegram_updates_controller.session_store = :memory_store
+  config.telegram_updates_controller.session_store = :redis_store, { expires_in: 1.hour }
 end

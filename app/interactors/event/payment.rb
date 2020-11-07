@@ -16,11 +16,12 @@ class Event::Payment < BaseInteractor
     @event = context.event
     @user = context.user
     @user_event = UserEvent.find_by(event: event, user: user)
-    @payment = context.payment
+    @payment = context.payment.to_i
   end
 
   def pay_for_event
-    user_event.update(payment: payment) ? success : fail
+    user_event.payment += Money.new(payment * 100, 'RUB')
+    user_event.save ? success : fail
   end
 
   def authorize

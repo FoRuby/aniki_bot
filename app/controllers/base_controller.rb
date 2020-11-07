@@ -7,7 +7,7 @@ module BaseController
     File.open(File.join(Rails.root, 'app', 'assets', 'images', name), 'r')
   end
 
-  def render_errors(errors)
-    errors.each { |m| reply_with :message, text: "#{m}" }
-  end
+  # def render_errors(errors)
+  #   errors.each { |m| "#{m}" }
+  # end
 end

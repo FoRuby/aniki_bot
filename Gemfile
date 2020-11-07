@@ -9,6 +9,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg'
 gem 'puma'
 gem 'rails'
+gem 'redis-rails'
 gem 'sass-rails'
 
 gem 'action_policy'

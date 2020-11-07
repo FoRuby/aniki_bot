@@ -13,7 +13,7 @@ class User::Create < BaseInteractor
   def assign_attributes
     attr = context.user_attributes.symbolize_keys
     @user_attributes = attr.slice(:first_name, :last_name, :username)
-    @user_attributes[:chat_id] = attr[:id]
+    @user_attributes[:chat_id] = attr[:id].to_i
   end
 
   def create_user
