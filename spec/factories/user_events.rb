@@ -3,7 +3,7 @@ FactoryBot.define do
     user
     event
 
+    payment { 300 }
     admin { false }
-    payment_kopecks { Faker::Number.decimal(l_digits: 2) }
   end
 end

@@ -5,7 +5,6 @@ class User::Create < BaseInteractor
 
   def call
     create_user
-    set_up_user
   end
 
   private
@@ -17,11 +16,6 @@ class User::Create < BaseInteractor
   end
 
   def create_user
-    @user = User.find_by_username(user_attributes[:username])
-    @user = User.create(user_attributes) unless user
-  end
-
-  def set_up_user
-    context.user = user
+    context.user = User.create(user_attributes)
   end
 end

@@ -67,32 +67,4 @@ module EventActions::Event
   def render_errors(errors)
     errors.map { |m| "#{m} \n" }.join
   end
-
-  def render_event(event:)
-    message = render_event_header(event)
-    respond_with :message, text: message, parse_mode: 'html', reply_markup: reply_markup(event)
-  end
-
-  def rerender_event(event:, chat_id:, message_id:)
-    message = render_event_header(event)
-    edit_message 'text',
-                 chat_id: chat_id,
-                 message_id: message_id,
-                 text: message,
-                 parse_mode: 'html',
-                 reply_markup: reply_markup(event)
-  end
-
-  def reply_markup(event)
-    {
-      inline_keyboard: [
-        [
-          { text: 'join', callback_data: "join:#{event.id}" },
-          { text: 'leave', callback_data: "leave:#{event.id}" }
-        ],
-        [{ text: 'pay', callback_data: "pay:#{event.id}"}],
-        [{ text: 'bank', callback_data: "bank:#{event.id}"}]
-      ]
-    }
-  end
 end
