@@ -8,4 +8,5 @@ module InfosController
   include InfoActions::Van
   include InfoActions::Pants
   include InfoActions::Say
+  include InfoActions::Love
 end
