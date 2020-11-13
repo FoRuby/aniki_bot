@@ -1,9 +1,9 @@
 module InfoActions::Say
   def say!(*)
-    respond_with :message, text: "\u{2642} #{quotes.sample} \u{2642}"
+    respond_with :message, text: "\u{2642} #{gachi_quotes.sample} \u{2642}"
   end
 
-  def quotes
+  def gachi_quotes
     [
       "Our daddy taught us not to be ashamed of our dicks",
       "THANK YOU, SIR!",

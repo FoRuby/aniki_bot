@@ -1,16 +1,17 @@
 module InfoActions::Love
   def love!(*)
-    reply_with :message, text: "#{quotes.sample}"
+    reply_with :message, text: love_quotes.sample.to_s
   end
 
-  def quotes
+  def love_quotes
     [
       "Ты самый классный",
       "Я тебя люблю!",
       "У тебя все получится",
       "Не грусти",
       "Ты делаешь меня счастливей",
-      "Храни тебя, Господь!"
+      "Храни тебя, Господь!",
+      "Погуляем сегодня?"
     ]
   end
 end
