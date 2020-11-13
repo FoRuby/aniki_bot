@@ -5,7 +5,7 @@ class Event < ApplicationRecord
 
   enumerize :status, in: %i[open close], default: :open, predicates: true
 
-  has_many :user_events
+  has_many :user_events, dependent: :destroy
   has_many :users, through: :user_events
   has_many :admins, -> { merge(UserEvent.admins) }, source: :user, through: :user_events
 
