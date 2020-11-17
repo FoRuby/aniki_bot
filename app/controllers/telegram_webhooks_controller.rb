@@ -28,7 +28,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   private
 
   def authenticate_user!
-    @current_user = User.find_by_username(from["username"])
+    @current_user = User.find_by_username(from["id"])
     @current_user ||= User::Create.call(user_attributes: from).user
   end
 end
