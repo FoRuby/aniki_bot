@@ -18,6 +18,12 @@ gem 'interactor'
 gem 'money-rails'
 gem 'telegram-bot'
 
+gem 'trailblazer'
+gem 'trailblazer-rails'
+gem 'reform'
+gem 'reform-rails'
+gem 'dry-validation'
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'

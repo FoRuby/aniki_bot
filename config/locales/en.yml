@@ -1,4 +1,8 @@
 en:
+  dry_validation:
+    errors:
+      taken: 'is already taken'
+
   telegram_webhooks:
 
     callback_query:
