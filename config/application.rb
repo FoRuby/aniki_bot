@@ -29,6 +29,10 @@ module AnikiBot
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.time_zone = 'Moscow'
+    config.i18n.available_locales = %i[en ru]
+    config.i18n.default_locale = :en
+
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
