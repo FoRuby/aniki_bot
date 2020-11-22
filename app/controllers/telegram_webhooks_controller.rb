@@ -1,4 +1,8 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
+  before_action :authenticate_user!
+
+  attr_reader :current_user
+
   include Telegram::Bot::UpdatesController::MessageContext
   include Telegram::Bot::UpdatesController::Session
   include CallbackQueryContext
@@ -12,12 +16,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   use_session!
 
-  before_action :authenticate_user!
-
-  def current_user
-    @current_user
-  end
-
   def action_missing(action, *_args)
     if action_type == :command
       respond_with :message,
@@ -28,7 +26,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   private
 
   def authenticate_user!
-    @current_user = User.find_by_username(from["username"])
-    @current_user ||= User::Create.call(user_attributes: from).user
+    params = User::Parser::Base.call(from)
+    @current_user = User::Operation::Update.call(params: params)[:'contract.update_user']&.model
+    @current_user ||= User::Operation::Create.call(params: params)[:'contract.create_user'].model
   end
 end

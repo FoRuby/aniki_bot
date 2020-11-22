@@ -1,4 +1,8 @@
 en:
+  dry_validation:
+    errors:
+      taken: 'is already taken'
+
   telegram_webhooks:
 
     callback_query:
@@ -36,18 +40,17 @@ en:
         /van - Van Darkholme
         /say - GACHI quote
         /roll - ♂Aniki♂ perform GACHIROLL
-        /feedback - Tell ♂Aniki♂ your secret
+        /love <usertags> Show your love to selected users.
+          Sample: /love @GachiBuhgalterBot @r1zrei
+        /love Get words of support
+        /feedback <text> - Tell ♂Aniki♂ your secret
 
-        /create_squad <squad_name> - Create your own BOYS SQUAD
-        /join_squad <squad_name> - Join to SQUAD
-        /squad_boys <squad_name> - See your BOYS in SQUAD
-
-        /create_event <event_name> <event_date> <event_time> - Create Event | Date format: 2020-10-20 | Time format 11:11
-        /join_event <event_id> - To join Event with
-        /event_payment <event_id> <payment_falue> - Pay for event
-        /event_bank <event_id> - Event bank
-        /event_info <event_id> - Event info
+        /create_event <name> <date> <time> - Create Event
+          Sample: /create_event TestEvent 2020-10-20 11:11
+        /event <event_id> - Show event info by selected ID.
+          Sample: /event 1
         /my_events - Show yours Events
+        /my_finance - Show yours Finance
     van:
       content: ♂ Welcome to my Deep Dark Fantasies! ♂"
     aniki:

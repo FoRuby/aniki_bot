@@ -12,6 +12,12 @@ gem 'rails'
 gem 'redis-rails'
 gem 'sass-rails'
 
+gem 'trailblazer'
+gem 'trailblazer-rails'
+gem 'reform'
+gem 'reform-rails'
+gem 'dry-validation'
+
 gem 'action_policy'
 gem 'enumerize'
 gem 'interactor'
