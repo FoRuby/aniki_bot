@@ -26,7 +26,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   private
 
   def authenticate_user!
-    params = User::Parser::Create.call(from)
+    params = User::Parser::Base.call(from)
     @current_user = User::Operation::Update.call(params: params)[:'contract.update_user']&.model
     @current_user ||= User::Operation::Create.call(params: params)[:'contract.create_user'].model
   end
