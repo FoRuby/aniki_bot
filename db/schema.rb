@@ -2,18 +2,30 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_210500) do
+ActiveRecord::Schema.define(version: 2021_03_04_222456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "debts", force: :cascade do |t|
+    t.bigint "creditor_id", null: false
+    t.bigint "borrower_id"
+    t.integer "debt_kopecks", default: 0
+    t.string "debt_currency", default: "RUB", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_compensation", default: false
+    t.index ["borrower_id"], name: "index_debts_on_borrower_id"
+    t.index ["creditor_id"], name: "index_debts_on_creditor_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "name", null: false
@@ -31,10 +43,26 @@ ActiveRecord::Schema.define(version: 2020_11_07_210500) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
-  create_table "squads", force: :cascade do |t|
-    t.string "name"
+  create_table "refills", force: :cascade do |t|
+    t.bigint "from_user_id", null: false
+    t.bigint "to_user_id", null: false
+    t.string "status", null: false
+    t.integer "value_kopecks", default: 0
+    t.string "value_currency", default: "RUB", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["from_user_id"], name: "index_refills_on_from_user_id"
+    t.index ["to_user_id"], name: "index_refills_on_to_user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
   create_table "user_events", force: :cascade do |t|
@@ -48,28 +76,8 @@ ActiveRecord::Schema.define(version: 2020_11_07_210500) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["event_id"], name: "index_user_events_on_event_id"
+    t.index ["user_id", "event_id"], name: "index_user_events_on_user_id_and_event_id", unique: true
     t.index ["user_id"], name: "index_user_events_on_user_id"
-  end
-
-  create_table "user_payers", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "payer_id"
-    t.integer "debt_kopecks", default: 0
-    t.string "debt_currency", default: "RUB", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["payer_id"], name: "index_user_payers_on_payer_id"
-    t.index ["user_id"], name: "index_user_payers_on_user_id"
-  end
-
-  create_table "user_squads", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "squad_id", null: false
-    t.boolean "admin", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["squad_id"], name: "index_user_squads_on_squad_id"
-    t.index ["user_id"], name: "index_user_squads_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -79,12 +87,19 @@ ActiveRecord::Schema.define(version: 2020_11_07_210500) do
     t.bigint "chat_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_id"], name: "index_users_on_chat_id"
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
+  add_foreign_key "debts", "users", column: "creditor_id"
   add_foreign_key "notes", "users"
   add_foreign_key "user_events", "events"
   add_foreign_key "user_events", "users"
-  add_foreign_key "user_payers", "users"
-  add_foreign_key "user_squads", "squads"
-  add_foreign_key "user_squads", "users"
 end

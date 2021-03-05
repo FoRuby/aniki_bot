@@ -14,7 +14,7 @@ module InfoActions::Love
                  .map { |username| User.find_by_username(username) }
                  .compact
     users.each do |user|
-      bot.send_message chat_id: user.chat_id, text: "#{current_user.usertag} loves you!"
+      bot.send_message chat_id: user.chat_id, text: "#{current_user.tag} loves you!"
     end
   end
 

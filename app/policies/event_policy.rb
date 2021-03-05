@@ -1,23 +1,31 @@
 class EventPolicy < ApplicationPolicy
-  def close?
-    admin? && opened?
+  def show?
+    member?
   end
 
-  def pay?
-    member? && opened?
+  def create?
+    user
+  end
+
+  def edit?
+    admin?
+  end
+
+  def update?
+    admin?
+  end
+
+  def close?
+    admin?
   end
 
   private
 
   def admin?
-    record.admins.include? user
+    user&.has_role? :admin, model
   end
 
   def member?
-    record.users.include? user
-  end
-
-  def opened?
-    record.open?
+    model.users.include? user
   end
 end

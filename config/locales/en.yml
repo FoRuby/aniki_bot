@@ -1,38 +1,54 @@
 en:
+  errors:
+    unauthorized: You are not authorized to perform this action
+    not_found: Record not found
   dry_validation:
     errors:
-      taken: 'is already taken'
+      user:
+        rules:
+          chat_id:
+            exist: is already exist
+      event:
+        rules:
+          event:
+            close: is already close
+          date:
+            already_past: must be in future
+      user_event:
+        rules:
+          user:
+            exist: is already involved in the event
+          event:
+            close: is already close
+          payment:
+            greater_then: must be greater then %{value}
+      refill:
+        rules:
+          value:
+            greater_then: invalid, must be greater then 0
+      debt:
+        rules:
+          debt:
+            greater_then_zero: invalid, must be greater then 0
 
   telegram_webhooks:
-
-    callback_query:
-      alert: This is ALERT-T-T!!!
-      no_alert: Simple answer
-    inline_keyboard:
-      alert: Answer with alert
-      no_alert: Without alert
-      prompt: 'Check my inline keyboard:'
-      repo: Open gem repo
-    inline_query:
-      content: Content
-      description: Description
-    keyboard:
-      buttons:
-        - Lorem
-        - Ipsum
-        - /cancel
-      prompt: 'Select something with keyboard:'
-      selected: "You've selected: %{value}"
-    last_chosen_inline_result:
-      prompt: Mention me to initiate inline query
-      selected: "You've chosen result #%{result_id}"
-    memo:
-      notice: Remembered!
-      prompt: What should I remember?
-    message:
-      content: 'You wrote: %{text}'
-    remind_me:
-      nothing: Nothing to remind
+    join_callback_query:
+      success: You have joined the event
+    leave_callback_query:
+      success: You left the event
+      failure: You not part of event
+    update_callback_query:
+      success: "Input new event name and date. Example: NewName 2020-10-20 11:11"
+    refill_borrower_callback_query:
+      success: "Input Borrower payment"
+    close_callback_query:
+      success: Event was close. See your finance statistic on /me => Finance
+    bank_callback_query:
+      failure: Something went wrong!
+    pay_callback_query:
+      success: Enter event payment
+    kick_callback_query:
+      success: "You kicked out %{value}"
     start:
       content: |
         Hello ma ♂BOY♂:
@@ -49,53 +65,17 @@ en:
           Sample: /create_event TestEvent 2020-10-20 11:11
         /event <event_id> - Show event info by selected ID.
           Sample: /event 1
-        /my_events - Show yours Events
-        /my_finance - Show yours Finance
+        /me - User actions
     van:
       content: ♂ Welcome to my Deep Dark Fantasies! ♂"
     aniki:
       content: Hello! It's me, ANIKI!
     action_missing:
       command: Can not perform %{command}
-
-    create_squad:
-      success: Squad created. %{username} <= ♂BOSS OF THE SQUAD♂
-    leave_squad:
-      success: Goodbye ma ♂BOY♂
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-    join_squad:
-      success: Welcome to %{squad_name} ♂BOY♂
-    my_squads:
-      success: '%{username} member of SQUADS: %{squads}'
-      failure: You so lonely, ♂GO FUCK YOURSELF♂
-    squad_boys:
-      squad: 'SQUAD: %{squad_name}'
-      users: 'SQUAD ♂BOYS♂ => %{users}'
-      no_squad: FUCK YOU, LEATHERMAN! No such SQUAD!
-
-    create_event:
-      success: "%{message}"
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-    join_event:
-      success: "%{message}"
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-    event_info:
-      success: "%{message}"
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-    event_payment:
-      success: "%{message}"
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-    event_bank:
-      success: "%{message}"
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-
-    my_events:
-      success: "%{message}"
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂
-    my_debtors:
-      success: "%{message}"
-      failure: You have no debtors
-
+    pay:
+      success: Payment accepted
+    refill_borrower:
+      success: Payment accepted
     feedback:
       success: ♂Aniki♂ will read your complaint and write back to you
       failure: ♂This is wrong door. Pull up your pants. Van is coming!♂

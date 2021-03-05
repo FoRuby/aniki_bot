@@ -9,20 +9,20 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg'
 gem 'puma'
 gem 'rails'
+gem "rolify"
 gem 'redis-rails'
 gem 'sass-rails'
+gem 'action_policy'
+gem 'enumerize'
+gem 'interactor'
+gem 'money-rails'
+gem 'telegram-bot'
 
 gem 'trailblazer'
 gem 'trailblazer-rails'
 gem 'reform'
 gem 'reform-rails'
 gem 'dry-validation'
-
-gem 'action_policy'
-gem 'enumerize'
-gem 'interactor'
-gem 'money-rails'
-gem 'telegram-bot'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -31,6 +31,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-sidekiq'
   gem 'shoulda-matchers'
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -41,4 +42,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+# gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

@@ -1,16 +1,11 @@
 module User::Validation
-  class Update < Shared::ApplicationContract
+  class Update < User::Validation::Base
     params do
       required(:id).filled(:integer)
-      required(:first_name).filled(:string)
-      required(:chat_id).filled(:integer)
-
-      optional(:last_name).maybe(:string)
-      optional(:username).maybe(:string)
     end
 
     rule(:chat_id, :id) do
-      key.failure(:taken) unless User.where.not(id: values[:id]).where(chat_id: values[:chat_id]).empty?
+      key.failure(:exist) unless User.where.not(id: values[:id]).where(chat_id: values[:chat_id]).empty?
     end
   end
 end

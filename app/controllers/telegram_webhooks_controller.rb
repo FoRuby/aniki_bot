@@ -9,25 +9,27 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   include BaseController
   include InfosController
-  include SquadsController
   include EventsController
   include UsersController
-  include NotesController
+  include ChangelogController
 
   use_session!
 
   def action_missing(action, *_args)
-    if action_type == :command
-      respond_with :message,
-                   text: t('telegram_webhooks.action_missing.command', command: action_options[:command])
-    end
+    return unless action_type == :command
+
+    respond_with(:message, text: t('telegram_webhooks.action_missing.command', command: action_options[:command]))
+  end
+
+  def separator(value: '-', padstr: '-', width:)
+    "<pre>|#{value.center(width, padstr)}|</pre>\n"
   end
 
   private
 
   def authenticate_user!
     params = User::Parser::Base.call(from)
-    @current_user = User::Operation::Update.call(params: params)[:'contract.update_user']&.model
-    @current_user ||= User::Operation::Create.call(params: params)[:'contract.create_user'].model
+    @current_user = User::Operation::Update.call(params: params)[:model]
+    @current_user ||= User::Operation::Create.call(params: params)[:model]
   end
 end

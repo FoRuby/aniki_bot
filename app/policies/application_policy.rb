@@ -1,3 +1,7 @@
 class ApplicationPolicy < ActionPolicy::Base
-  authorize :user
+  attr_reader :model, :user
+
+  def initialize(user, model)
+    @user, @model = user, model
+  end
 end

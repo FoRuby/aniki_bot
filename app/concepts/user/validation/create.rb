@@ -1,15 +1,11 @@
 module User::Validation
-  class Create < Shared::ApplicationContract
+  class Create < User::Validation::Base
     params do
-      required(:first_name).filled(:string)
       required(:chat_id).filled(:integer)
-
-      optional(:last_name).maybe(:string)
-      optional(:username).maybe(:string)
     end
 
     rule(:chat_id) do
-      key.failure(:taken) if User.where(chat_id: values[:chat_id]).exists?
+      key.failure(:exist) if User.where(chat_id: value).exists?
     end
   end
 end

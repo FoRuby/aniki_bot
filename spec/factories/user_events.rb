@@ -3,7 +3,10 @@ FactoryBot.define do
     user
     event
 
+    payment { 0 }
+  end
+
+  trait :with_payment do
     payment { 300 }
-    admin { false }
   end
 end
