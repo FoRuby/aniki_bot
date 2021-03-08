@@ -16,10 +16,7 @@ RSpec.describe User::Operation::Create do
       let(:params) { attributes_for :user, chat_id: user.chat_id }
 
       it { should be_failure }
-
-      it 'should contain errors' do
-        expect(operation_errors(operation)).to include 'Chat Id is already exist'
-      end
+      it { expect(operation_errors(operation)).to include 'Chat Id is already exist' }
     end
   end
 end

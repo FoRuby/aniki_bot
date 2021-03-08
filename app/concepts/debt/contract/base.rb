@@ -3,10 +3,10 @@ module Debt::Contract
     property :creditor
     property :borrower
     property :coefficient, default: 1, virtual: true
-    property :debt, populator: :debt!
+    property :value, populator: :value!
 
-    def debt!(fragment:, **)
-      self.debt += Money.new(fragment.abs * coefficient, 'RUB')
+    def value!(fragment:, **)
+      self.value += Money.new(fragment.abs * coefficient, 'RUB')
     end
 
     validation contract: ::Debt::Validation::Base.new

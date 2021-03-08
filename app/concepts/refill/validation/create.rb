@@ -1,11 +1,10 @@
 module Refill::Validation
-  class Base < Shared::ApplicationContract
+  class Create < Shared::ApplicationContract
     config.messages.namespace = :refill
 
     params do
-      required(:from_user).filled(type?: User)
-      required(:to_user).filled(type?: User)
       required(:value).filled(type?: Money)
+      required(:debt_id).filled(:integer)
     end
 
     rule(:value) do

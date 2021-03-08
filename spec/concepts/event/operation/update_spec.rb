@@ -41,41 +41,28 @@ RSpec.describe Event::Operation::Update do
         end
         let(:params) { attributes_for(:event).merge({ id: event.id }) }
 
-        it 'should ' do
-          pp operation
-        end
-
         it { should be_failure }
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Event is already close'
-        end
+        it { expect(operation_errors(operation)).to include 'Event is already close' }
       end
 
       describe 'empty event name' do
         let(:params) { attributes_for(:event).merge({ id: event.id, name: '' }) }
 
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Name must be filled'
-        end
+        it { expect(operation_errors(operation)).to include 'Name must be filled' }
         it_behaves_like 'invalid update event operation'
       end
 
       describe 'invalid date format' do
         let(:params) { { id: event.id, name: 'test', date: 'foobar' } }
 
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Date is in invalid format'
-        end
+        it { expect(operation_errors(operation)).to include 'Date is in invalid format' }
         it_behaves_like 'invalid update event operation'
       end
 
       describe 'invalid past date' do
         let(:params) { { id: event.id, name: 'test', date: (Time.now - 1.day).strftime('%F %H:%M') } }
 
-        it 'should contain errors' do
-          pp operation
-          expect(operation_errors(operation)).to include 'Date must be in future'
-        end
+        it { expect(operation_errors(operation)).to include 'Date must be in future' }
         it_behaves_like 'invalid update event operation'
       end
     end

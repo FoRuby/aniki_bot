@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_04_222456) do
+ActiveRecord::Schema.define(version: 2021_03_08_114917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2021_03_04_222456) do
   create_table "debts", force: :cascade do |t|
     t.bigint "creditor_id", null: false
     t.bigint "borrower_id"
-    t.integer "debt_kopecks", default: 0
-    t.string "debt_currency", default: "RUB", null: false
+    t.integer "value_kopecks", default: 0
+    t.string "value_currency", default: "RUB", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "is_compensation", default: false
@@ -44,15 +44,13 @@ ActiveRecord::Schema.define(version: 2021_03_04_222456) do
   end
 
   create_table "refills", force: :cascade do |t|
-    t.bigint "from_user_id", null: false
-    t.bigint "to_user_id", null: false
     t.string "status", null: false
     t.integer "value_kopecks", default: 0
     t.string "value_currency", default: "RUB", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["from_user_id"], name: "index_refills_on_from_user_id"
-    t.index ["to_user_id"], name: "index_refills_on_to_user_id"
+    t.bigint "debt_id", null: false
+    t.index ["debt_id"], name: "index_refills_on_debt_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -100,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_03_04_222456) do
 
   add_foreign_key "debts", "users", column: "creditor_id"
   add_foreign_key "notes", "users"
+  add_foreign_key "refills", "debts"
   add_foreign_key "user_events", "events"
   add_foreign_key "user_events", "users"
 end

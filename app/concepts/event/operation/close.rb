@@ -30,7 +30,7 @@ module Event::Operation
               creditor: user_event_major.user,
               borrower: user_event_minor.user,
               coefficient: user_event_major.debt / major_bank,
-              debt: user_event_minor.debt
+              value: user_event_minor.debt
             }
           )[:model]
         end

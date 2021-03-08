@@ -7,11 +7,12 @@ RSpec.describe User, type: :model do
 
     it { should have_many(:user_creditors).class_name(Debt).with_foreign_key(:borrower_id) }
     it { should have_many(:creditors).through(:user_creditors) }
+    it { should have_many(:positive_creditors).through(:user_creditors) }
 
     it { should have_many(:user_borrowers).class_name(Debt).with_foreign_key(:creditor_id) }
     it { should have_many(:borrowers).through(:user_borrowers) }
+    it { should have_many(:positive_borrowers).through(:user_borrowers) }
 
-    it { should have_many(:refills).class_name(Refill).with_foreign_key(:to_user_id) }
     it { should have_many(:notes).dependent(:nullify) }
   end
 
@@ -49,8 +50,8 @@ RSpec.describe User, type: :model do
       let(:user) { create :user }
 
       describe 'many borrowers' do
-        let!(:debt1) { create :debt, creditor: user, debt: 150 }
-        let!(:debt2) { create :debt, creditor: user, debt: 250 }
+        let!(:debt1) { create :debt, creditor: user, value: 150 }
+        let!(:debt2) { create :debt, creditor: user, value: 250 }
 
         it { should eq debt2.borrower }
       end
@@ -65,8 +66,8 @@ RSpec.describe User, type: :model do
       let(:user) { create :user }
 
       describe 'many creditors' do
-        let!(:debt1) { create :debt, borrower: user, debt: 150 }
-        let!(:debt2) { create :debt, borrower: user, debt: 250 }
+        let!(:debt1) { create :debt, borrower: user, value: 150 }
+        let!(:debt2) { create :debt, borrower: user, value: 250 }
 
         it { should eq debt2.creditor }
       end
@@ -97,8 +98,8 @@ RSpec.describe User, type: :model do
       let(:user) { create :user }
 
       describe 'many borrowers' do
-        let!(:borrower1) { create :debt, creditor: user, debt: 100 }
-        let!(:borrower2) { create :debt, creditor: user, debt: 200 }
+        let!(:borrower1) { create :debt, creditor: user, value: 100 }
+        let!(:borrower2) { create :debt, creditor: user, value: 200 }
 
         it { should eq '300.00 ₽' }
       end
@@ -113,8 +114,8 @@ RSpec.describe User, type: :model do
       let(:user) { create :user }
 
       describe 'many creditors' do
-        let!(:creditor1) { create :debt, borrower: user, debt: 150 }
-        let!(:creditor2) { create :debt, borrower: user, debt: 250 }
+        let!(:creditor1) { create :debt, borrower: user, value: 150 }
+        let!(:creditor2) { create :debt, borrower: user, value: 250 }
 
         it { should eq '400.00 ₽' }
       end

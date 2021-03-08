@@ -27,7 +27,7 @@ RSpec.describe Event::Operation::Close do
         debt = operation[:debts].last
         expect(debt.borrower).to eq event_admin
         expect(debt.creditor).to eq event_member
-        expect(debt.debt.format).to eq '150.00 ₽'
+        expect(debt.value.format).to eq '150.00 ₽'
       end
     end
 
@@ -54,9 +54,7 @@ RSpec.describe Event::Operation::Close do
         let(:params) { { id: event.id } }
 
         it_behaves_like 'invalid close event operation'
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Event is already close'
-        end
+        it { expect(operation_errors(operation)).to include 'Event is already close' }
       end
     end
   end

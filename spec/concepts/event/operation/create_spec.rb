@@ -17,27 +17,21 @@ RSpec.describe Event::Operation::Create do
       describe 'empty event name' do
         let(:params) { { name: '', date: '2021-01-01 19:00' } }
 
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Name must be filled'
-        end
+        it { expect(operation_errors(operation)).to include 'Name must be filled' }
         it_behaves_like 'invalid create event operation'
       end
 
       describe 'invalid date format' do
         let(:params) { { name: 'test', date: '2021-01-01' } }
 
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Date is in invalid format'
-        end
+        it { expect(operation_errors(operation)).to include 'Date is in invalid format' }
         it_behaves_like 'invalid create event operation'
       end
 
       describe 'invalid past date' do
         let(:params) { { name: 'test', date: (Time.now - 1.day).strftime('%F %H:%M') } }
 
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Date must be in future'
-        end
+        it { expect(operation_errors(operation)).to include 'Date must be in future' }
         it_behaves_like 'invalid create event operation'
       end
     end

@@ -5,11 +5,11 @@ module Debt::Validation
     params do
       required(:creditor).filled(type?: User)
       required(:borrower).filled(type?: User)
-      required(:debt).filled(type?: Money)
+      required(:value).filled(type?: Money)
     end
 
-    rule :debt do
-      key.failure(:greater_then_zero) if value <= 0
+    rule :value do
+      key.failure(:greater_then) if value <= 0
     end
   end
 end

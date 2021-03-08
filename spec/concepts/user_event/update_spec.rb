@@ -54,12 +54,25 @@ RSpec.describe UserEvent::Operation::Update do
         it { expect(operation[:model].payment.format).to eq '0.00 ₽' }
       end
 
-      describe 'negative payment' do
+      describe 'negative first payment' do
         let(:user) { event_member }
         let(:params) { { user_id: user.id, event_id: event.id, payment: -300 } }
 
+        it { should be_failure }
+        it { expect(operation_errors(operation)).to include 'Payment invalid. Event payment sum must be greater then 0' }
+      end
+
+      describe 'negative second payment' do
+        let(:user) { event_member }
+        let(:params) { { user_id: user.id, event_id: event.id, payment: -200 } }
+
+        before do
+          UserEvent::Operation::Update.call(current_user: event_member,
+                                            params: { payment: 300, user_id: event_member.id, event_id: event.id })
+        end
+
         it { should be_success }
-        it { expect(operation[:model].payment.format).to eq '0.00 ₽' }
+        it { expect(operation[:model].payment.format).to eq '100.00 ₽' }
       end
 
       describe 'invalid params' do

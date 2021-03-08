@@ -21,34 +21,37 @@ en:
           event:
             close: is already close
           payment:
-            greater_then: must be greater then %{value}
+            invalid: invalid. Event payment sum must be greater then 0
       refill:
         rules:
           value:
             greater_then: invalid, must be greater then 0
       debt:
         rules:
-          debt:
-            greater_then_zero: invalid, must be greater then 0
+          value:
+            greater_then: invalid, Debt sum must be greater then 0
 
   telegram_webhooks:
     join_callback_query:
       success: You have joined the event
     leave_callback_query:
       success: You left the event
-      failure: You not part of event
     update_callback_query:
-      success: "Input new event name and date. Example: NewName 2020-10-20 11:11"
+      success: 'Input new event name and date. Example: NewName 2020-10-20 11:11'
     refill_borrower_callback_query:
-      success: "Input Borrower payment"
+      success: Input Borrower payment
     close_callback_query:
       success: Event was close. See your finance statistic on /me => Finance
+    compensation_callback_query:
+      success: Compensation action between %{u1} and %{u2} complete. Compensation sum = %{sum}
+      failure1: "%{u1} trying to compensate a debt. Select /me => Compensation => %{u1} to complete action"
+      failure2: Sending message to %{u2} to complete action
     bank_callback_query:
       failure: Something went wrong!
     pay_callback_query:
       success: Enter event payment
     kick_callback_query:
-      success: "You kicked out %{value}"
+      success: You kicked out %{value}
     start:
       content: |
         Hello ma ♂BOY♂:
@@ -75,7 +78,6 @@ en:
     pay:
       success: Payment accepted
     refill_borrower:
-      success: Payment accepted
+      success: Refill action between %{u1} and %{u2} complete. Refill sum = %{refill}
     feedback:
       success: ♂Aniki♂ will read your complaint and write back to you
-      failure: ♂This is wrong door. Pull up your pants. Van is coming!♂

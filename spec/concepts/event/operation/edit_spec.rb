@@ -42,9 +42,7 @@ RSpec.describe Event::Operation::Edit do
         let(:params) { { id: event.id } }
 
         it { should be_failure }
-        it 'should contain errors' do
-          expect(operation_errors(operation)).to include 'Event is already close'
-        end
+        it { expect(operation_errors(operation)).to include 'Event is already close' }
       end
     end
   end

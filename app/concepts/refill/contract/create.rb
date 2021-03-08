@@ -1,13 +1,12 @@
 module Refill::Contract
-  class Base < Reform::Form
-    property :from_user
-    property :to_user
+  class Create < Reform::Form
     property :value, populator: :value!
+    property :debt_id
 
     def value!(fragment:, **)
       self.value = fragment.is_a?(Money) ? fragment : Money.new(fragment * 100, 'RUB')
     end
 
-    validation contract: ::Refill::Validation::Base.new
+    validation contract: ::Refill::Validation::Create.new
   end
 end

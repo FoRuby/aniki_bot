@@ -5,11 +5,9 @@ module Debt::Operation
     step :opponent
     step :update_debt1
     step :consent?
-    # fail :notificate_opponent
     step :compensate
     step :refill_debts
     step :close_compensation
-    # step :notificate_users
 
     def debt1(options, current_user:, params:, **)
       options[:debt1] = Debt.find_by(creditor_id: current_user.id, borrower_id: params[:opponent_id])
@@ -32,37 +30,22 @@ module Debt::Operation
     end
 
     def compensate(options, current_user:, **)
-      options[:compensation] = [options[:debt1].debt, options[:debt2].debt].min
+      options[:compensation] = [options[:debt1].value, options[:debt2].value].min
     end
 
-    def refill_debts(options, current_user:, **)
+    def refill_debts(options, params:, current_user:, **)
       true if options[:compensation] == Money.new(0, 'RUB')
 
-      Refill::Operation::Create.call(
-        current_user: current_user,
-        params: { from_user: current_user, to_user: options[:opponent], value: options[:compensation] }
+      Debt::Operation::Refill.call(
+        current_user: current_user, debt: options[:debt1], params: { value: options[:compensation] }
       )
-      Refill::Operation::Create.call(
-        current_user: current_user,
-        params: { from_user: options[:opponent], to_user: current_user, value: options[:compensation] }
+      Debt::Operation::Refill.call(
+        current_user: current_user, debt: options[:debt2], params: { value: options[:compensation] }
       )
     end
 
     def close_compensation(options, current_user:, **)
       [options[:debt1], options[:debt2]].each { |debt| debt.update(is_compensation: false) }
     end
-
-    # def notificate_users(options, current_user:, **)
-      # message =
-      #   "Compensation between #{current_user.tag} and #{options[:opponent].tag} complete. Compensation sum = #{compensation.format}"
-      # ANIKI.send_message chat_id: current_user.chat_id, text: message
-      # ANIKI.send_message chat_id: options[:opponent].chat_id, text: message
-    # end
-
-    # def notificate_opponent(options, **)
-      # message =
-      #   "#{current_user.tag} trying to compensate a debt. Select /me => Compensation => #{options[:opponent].tag} to complete action"
-      # ANIKI.send_message chat_id: options[:opponent].chat_id, text: message
-    # end
   end
 end

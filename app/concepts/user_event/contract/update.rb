@@ -6,10 +6,10 @@ module UserEvent::Contract
     property :payment, populator: :payment!
     property :debt
     property :admin, default: false
+    property :user_event, virtual: true
 
     def payment!(fragment:, **)
       self.payment += fragment.is_a?(Money) ? fragment : Money.new(fragment * 100, 'RUB')
-      self.payment = Money.new(0, 'RUB') if self.payment.negative?
     end
 
     validation contract: ::UserEvent::Validation::Update.new

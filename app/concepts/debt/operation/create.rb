@@ -6,9 +6,7 @@ module Debt::Operation
     step Contract::Persist()
 
     def model!(options, params:, **)
-      options[:model] = Debt.find_by(creditor: params[:creditor], borrower: params[:borrower])
-      options[:model] = Debt.new unless options[:model]
-      true
+      options[:model] = Debt.find_or_initialize_by(creditor: params[:creditor], borrower: params[:borrower])
     end
   end
 end

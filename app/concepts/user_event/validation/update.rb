@@ -8,6 +8,11 @@ module UserEvent::Validation
       required(:event_id).filled(:integer)
       required(:payment).filled(type?: Money)
       required(:debt).filled(type?: Money)
+      required(:user_event).filled(type?: UserEvent)
+    end
+
+    rule :payment do
+      key(:payment).failure(:invalid) if values[:payment].negative?
     end
 
     rule(:event_id) do
