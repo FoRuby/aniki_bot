@@ -60,7 +60,7 @@ en:
         /say - GACHI quote
         /roll - ♂Aniki♂ perform GACHIROLL
         /love <usertags> Show your love to selected users.
-          Sample: /love @GachiBuhgalterBot @r1zrei
+          Sample: /love @GachiBuhgalterBot
         /love Get words of support
         /feedback <text> - Tell ♂Aniki♂ your secret
 
@@ -70,13 +70,15 @@ en:
           Sample: /event 1
         /me - User actions
     van:
-      content: ♂ Welcome to my Deep Dark Fantasies! ♂"
+      content: ♂ Welcome to my Deep Dark Fantasies! ♂
     aniki:
       content: Hello! It's me, ANIKI!
     action_missing:
       command: Can not perform %{command}
     pay:
       success: Payment accepted
+    update_event:
+      success: 'Event successfully updated'
     refill_borrower:
       success: Refill action between %{u1} and %{u2} complete. Refill sum = %{refill}
     feedback:

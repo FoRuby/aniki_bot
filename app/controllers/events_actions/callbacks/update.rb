@@ -18,8 +18,9 @@ module EventsActions
         params = Event::Parser::Base.call(args).merge(id: session[:event_id])
         operation = Event::Operation::Update.call(current_user: current_user, params: params)
         if operation.success?
-          response = Render::Operation::EditEvent.call(current_user: current_user, event: operation[:model])[:response]
-          respond_with :message, response
+          respond_with :message, text: t('telegram_webhooks.update_event.success')
+          respond = Render::Operation::ShowEvent.call(event: operation[:model])[:response]
+          bot.edit_message_text(respond.merge(chat_id: session[:update].dig(:callback_query, :message, :chat, :id), message_id: session[:update].dig(:callback_query, :message, :message_id)))
         else
           bot.send_message chat_id: current_user.chat_id, text: render_errors(operation)
         end

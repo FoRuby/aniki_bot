@@ -21,10 +21,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with(:message, text: t('telegram_webhooks.action_missing.command', command: action_options[:command]))
   end
 
-  def separator(value: '-', padstr: '-', width:)
-    "<pre>|#{value.center(width, padstr)}|</pre>\n"
-  end
-
   private
 
   def authenticate_user!
