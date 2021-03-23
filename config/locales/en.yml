@@ -68,7 +68,10 @@ en:
           Sample: /create_event TestEvent 2020-10-20 11:11
         /event <event_id> - Show event info by selected ID.
           Sample: /event 1
+        /last_event - Show user last event
         /me - User actions
+
+        /changelog - Application changelog
     van:
       content: ♂ Welcome to my Deep Dark Fantasies! ♂
     aniki:
@@ -78,7 +81,7 @@ en:
     pay:
       success: Payment accepted
     update_event:
-      success: 'Event successfully updated'
+      success: Event successfully updated
     refill_borrower:
       success: Refill action between %{u1} and %{u2} complete. Refill sum = %{refill}
     feedback:

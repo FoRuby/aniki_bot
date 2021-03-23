@@ -9,6 +9,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   include BaseController
   include InfosController
+  include FeedbacksController
   include EventsController
   include UsersController
   include ChangelogController

@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:borrowers).through(:user_borrowers) }
     it { should have_many(:positive_borrowers).through(:user_borrowers) }
 
-    it { should have_many(:notes).dependent(:nullify) }
+    it { should have_many(:feedbacks).dependent(:destroy) }
   end
 
   describe 'validations' do

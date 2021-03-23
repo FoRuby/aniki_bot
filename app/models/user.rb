@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   rolify
 
+  has_many :feedbacks, dependent: :destroy
+
   has_many :user_events, dependent: :destroy
   has_many :events, through: :user_events
 
@@ -11,9 +13,6 @@ class User < ApplicationRecord
   has_many :user_borrowers, foreign_key: :creditor_id, class_name: 'Debt'
   has_many :borrowers, through: :user_borrowers
   has_many :positive_borrowers, -> { merge(Debt.positive) }, source: :borrower, through: :user_borrowers
-
-  has_many :refills, foreign_key: :to_user_id, class_name: 'Refill'
-  has_many :notes, dependent: :nullify
 
   def tag
     return "@#{username}" if username

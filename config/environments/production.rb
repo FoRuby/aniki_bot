@@ -1,6 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.telegram_updates_controller.session_store = :redis_store
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

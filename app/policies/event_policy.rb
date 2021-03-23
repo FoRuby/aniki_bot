@@ -3,6 +3,10 @@ class EventPolicy < ApplicationPolicy
     member?
   end
 
+  def show_last?
+    show?
+  end
+
   def create?
     user
   end

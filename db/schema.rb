@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_08_114917) do
+ActiveRecord::Schema.define(version: 2021_03_23_094719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,12 +35,12 @@ ActiveRecord::Schema.define(version: 2021_03_08_114917) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "notes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.text "body", null: false
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "message"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_notes_on_user_id"
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
   create_table "refills", force: :cascade do |t|
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2021_03_08_114917) do
   end
 
   add_foreign_key "debts", "users", column: "creditor_id"
-  add_foreign_key "notes", "users"
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "refills", "debts"
   add_foreign_key "user_events", "events"
   add_foreign_key "user_events", "users"
