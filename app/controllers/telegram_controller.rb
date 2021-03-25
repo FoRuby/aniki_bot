@@ -1,4 +1,4 @@
-class TelegramWebhooksController < Telegram::Bot::UpdatesController
+class TelegramController < Telegram::Bot::UpdatesController
   before_action :authenticate_user!
 
   attr_reader :current_user
@@ -6,6 +6,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
   include Telegram::Bot::UpdatesController::Session
   include CallbackQueryContext
+  use_session!
 
   include BaseController
   include InfosController
@@ -13,8 +14,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include EventsController
   include UsersController
   include ChangelogController
-
-  use_session!
 
   def action_missing(action, *_args)
     return unless action_type == :command

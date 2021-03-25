@@ -6,20 +6,20 @@ module InfoActions
 
     def gachi_quotes
       [
-        "Our daddy taught us not to be ashamed of our dicks",
-        "THANK YOU, SIR!",
+        'Our daddy taught us not to be ashamed of our dicks',
+        'THANK YOU, SIR!',
         "OH SHIT, I'M SORRY!",
-        "FISTING IS 300$",
-        "ASS WE CAN",
-        "Come on college boy",
-        "Oh my shoulder",
-        "Pull up your pants",
+        'FISTING IS 300$',
+        'ASS WE CAN',
+        'Come on college boy',
+        'Oh my shoulder',
+        'Pull up your pants',
         "That's power son, that's power",
-        "It gets bigger when I pull on",
-        "Boy next door",
-        "Do you like what you see?",
-        "Take it boy!",
-        "Fuck you leather man!"
+        'It gets bigger when I pull on',
+        'Boy next door',
+        'Do you like what you see?',
+        'Take it boy!',
+        'Fuck you leather man!'
       ]
     end
   end

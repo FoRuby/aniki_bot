@@ -8,7 +8,7 @@ module InfoActions
       if users.include? '@GachiBuhgalterBot'
         bot.send_animation chat_id: current_user.chat_id,
                            animation: image('predator_handshake.gif'),
-                           caption: "Take it boy!"
+                           caption: 'Take it boy!'
       end
 
       users = users.map { |usertag| usertag[1..-1] }
@@ -21,13 +21,14 @@ module InfoActions
 
     def love_quotes
       [
-        "Ты самый классный",
-        "Я тебя люблю!",
-        "У тебя все получится",
-        "Не грусти",
-        "Ты делаешь меня счастливей",
-        "Храни тебя, Господь!",
-        "Погуляем сегодня?"
+        'You are the coolest!',
+        "You're breathtaking!",
+        'I love you!',
+        'You will succeed!',
+        'Do not be sad!',
+        'You make me happier!',
+        'God bless you!',
+        'Shall we take a walk today?'
       ]
     end
   end

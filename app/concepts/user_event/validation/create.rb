@@ -15,8 +15,10 @@ module UserEvent::Validation
     rule(:event_id) { key(:event).failure(:close) if Event.find_by(id: value)&.close? }
 
     rule(:user_id, :event_id) do
-      user_events = UserEvent.where(user_id: values[:user_id], event_id: values[:event_id])
-      key(:user).failure(:exist) if user_events.exists?
+      unless rule_error? :event
+        user_events = UserEvent.where(user_id: values[:user_id], event_id: values[:event_id])
+        key(:user).failure(:exist) if user_events.exists?
+      end
     end
   end
 end

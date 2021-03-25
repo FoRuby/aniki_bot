@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  telegram_webhook TelegramWebhooksController
+  telegram_webhook TelegramController
 end
