@@ -9,7 +9,6 @@ class Event < ApplicationRecord
 
   def bank
     val = user_events.sum(&:payment)
-    val = Money.new(0, 'RUB') if val.zero?
-    val.format
+    val.zero? ? Money.new(0, 'RUB').format : val.format
   end
 end

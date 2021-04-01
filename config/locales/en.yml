@@ -55,15 +55,6 @@ en:
     start:
       content: |
         Hello ma ♂BOY♂:
-        /aniki - Billy Herrington
-        /van - Van Darkholme
-        /say - GACHI quote
-        /roll - ♂Aniki♂ perform GACHIROLL
-        /love <usertags> Show your love to selected users.
-          Sample: /love @GachiBuhgalterBot
-        /love Get words of support
-        /feedback <text> - Tell ♂Aniki♂ your secret
-
         /create_event <name> <date> <time> - Create Event
           Sample: /create_event TestEvent 2020-10-20 11:11
         /event <event_id> - Show event info by selected ID.
@@ -71,7 +62,16 @@ en:
         /last_event - Show user last event
         /me - User actions
 
+        /aniki - Billy Herrington
+        /van - Van Darkholme
+        /say - GACHI quote
+        /roll - ♂Aniki♂ perform GACHIROLL
+        /love <usertags> Show your love to selected users.
+          Sample: /love @GachiBuhgalterBot
+        /love Get words of support
+
         /changelog - Application changelog
+        /feedback <text> - Tell ♂Aniki♂ your secret
     van:
       content: ♂ Welcome to my Deep Dark Fantasies! ♂
     aniki:
