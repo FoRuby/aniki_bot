@@ -12,9 +12,5 @@ module Shared
     end
 
     def parse; end
-
-    def symbolize_params_keys!
-      @params = @params.symbolize_keys
-    end
   end
 end
