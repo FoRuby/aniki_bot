@@ -9,7 +9,7 @@ module Event::Operation::Response::Create
     end
 
     def render
-      Render::Operation::ShowEvent.call(event: operation[:model])[:response]
+      Event::Operation::Render::Show.call(event: operation[:model], current_user: current_user)
     end
 
     def respond_msg
