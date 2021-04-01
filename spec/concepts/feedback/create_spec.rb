@@ -6,7 +6,10 @@ RSpec.describe Feedback::Operation::Create do
   describe '.call' do
     subject(:operation) { described_class.call(params: params, current_user: user) }
 
+
     describe 'valid params' do
+      before { allow(Feedback::Operation::Send).to receive(:call).and_return(true) }
+
       let(:user) { create :user }
       let(:params) { { message: Faker::Books::Lovecraft.paragraph } }
 
