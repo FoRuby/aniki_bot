@@ -5,7 +5,7 @@ module Event::Operation::Response::Bank
     end
 
     def respond_msg
-      @respond_msg ||= bot.send_message(render.merge(chat_id: chat_id)).deep_symbolize_keys
+      @respond_msg ||= bot.send_message(render).deep_symbolize_keys
     end
 
     def render

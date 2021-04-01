@@ -1,7 +1,7 @@
 module Event::Operation::Render
   class Bank < Event::Operation::Render::Base
     def render
-      @render ||= { text: text }
+      @render ||= { text: text, chat_id: current_user.chat_id }
     end
 
     def text

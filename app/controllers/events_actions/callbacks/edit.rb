@@ -5,9 +5,9 @@ module EventsActions
         operation = Event::Operation::Edit.call(current_user: current_user, params: { id: event_id })
         if operation.success?
           session[:show_event] = payload.deep_symbolize_keys
-          bot.send_message Render::Operation::EditEvent.call(current_user: current_user, event: operation[:model])[:response]
+          Event::Operation::Response::Edit::Success.call(payload: payload, current_user: current_user, operation: operation)
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Event::Operation::Response::Edit::Failure.call(payload: payload, current_user: current_user, operation: operation)
         end
       end
     end
