@@ -15,9 +15,7 @@ class User < ApplicationRecord
   has_many :positive_borrowers, -> { merge(Debt.positive) }, source: :borrower, through: :user_borrowers
 
   def tag
-    return "@#{username}" if username
-
-    first_name
+    username ? "@#{username}" : first_name
   end
 
   def top_borrower
@@ -30,19 +28,16 @@ class User < ApplicationRecord
 
   def total_spend
     val = user_events.sum(&:payment)
-    val = Money.new(0, 'RUB') if val.zero?
-    val.format
+    val.zero? ? Money.new(0, 'RUB').format : val.format
   end
 
   def total_borrowed
     val = user_borrowers.sum(&:value)
-    val = Money.new(0, 'RUB') if val.zero?
-    val.format
+    val.zero? ? Money.new(0, 'RUB').format : val.format
   end
 
   def total_credited
     val = user_creditors.sum(&:value)
-    val = Money.new(0, 'RUB') if val.zero?
-    val.format
+    val.zero? ? Money.new(0, 'RUB').format : val.format
   end
 end
