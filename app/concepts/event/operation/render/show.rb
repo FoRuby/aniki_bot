@@ -1,9 +1,5 @@
 module Event::Operation::Render
   class Show < Event::Operation::Render::Base
-    def self.call(...)
-      new(...).render
-    end
-
     def render
       @render ||= { text: text, parse_mode: 'html', reply_markup: reply_markup }
     end

@@ -6,5 +6,9 @@ module Event::Operation::Render
       @event = event
       @current_user = current_user
     end
+
+    def self.call(...)
+      new(...).render
+    end
   end
 end

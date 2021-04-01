@@ -4,10 +4,9 @@ module EventsActions
       def bank_callback_query(event_id = nil, *)
         operation = Event::Operation::Show.call(current_user: current_user, params: { id: event_id })
         if operation.success?
-          response = Render::Operation::ShowEvent.call(event: operation[:model])[:bank]
-          bot.send_message chat_id: current_user.chat_id, text: response, parse_mode: 'html'
+          Event::Operation::Response::Bank::Success.call(payload: payload, current_user: current_user, operation: operation)
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Event::Operation::Response::Bank::Failure.call(payload: payload, current_user: current_user, operation: operation)
         end
       end
     end

@@ -2,13 +2,13 @@ module Shared
   class ApplicationResponse
     attr_reader :payload, :current_user, :operation, :bot, :chat_id, :message_id, :errors
 
-    def initialize(payload:, current_user:, operation:)
+    def initialize(payload:, current_user:, operation:, errors: [])
       @current_user = current_user
       @operation = operation
       @payload = payload.deep_symbolize_keys
-      @chat_id = @payload.dig(:chat, :id)
-      @message_id = @payload[:message_id]
-      @errors = []
+      @chat_id = @payload.dig(:chat, :id) || @payload.dig(:message, :chat, :id)
+      @message_id = @payload[:message_id] || @payload.dig(:message, :message_id)
+      @errors = errors
       @bot = ANIKI
     end
 
@@ -18,8 +18,12 @@ module Shared
 
     def success_respond; end
 
-    def failure_respond
-      bot.send_message chat_id: current_user.chat_id, text: errors_msg
+    def failure_respond(callback: false)
+      if callback
+        bot.answer_callback_query callback_query_id: payload[:id], text: errors_msg, show_alert: true
+      else
+        bot.send_message chat_id: current_user.chat_id, text: errors_msg
+      end
     end
 
     def errors_msg(form_name: 'default', policy_name: 'default')
