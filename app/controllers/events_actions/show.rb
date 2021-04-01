@@ -10,10 +10,9 @@ module EventsActions
     def event!(*args)
       operation = Event::Operation::Show.call(current_user: current_user, params: { id: args.first })
       if operation.success?
-        response = Render::Operation::ShowEvent.call(event: operation[:model])[:response]
-        respond_with :message, response
+        Event::Operation::Response::Show::Success.call(payload: payload, current_user: current_user, operation: operation)
       else
-        bot.send_message chat_id: current_user.chat_id, text: render_errors(operation)
+        Event::Operation::Response::Show::Failure.call(payload: payload, current_user: current_user, operation: operation)
       end
     end
   end
