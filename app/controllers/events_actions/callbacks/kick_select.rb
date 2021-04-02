@@ -6,10 +6,9 @@ module EventsActions
         if operation.success?
           session[:event_id] = event_id.to_i
           session[:edit_event] = payload.deep_symbolize_keys
-          render = Render::Operation::UserKickSelect.call(event: operation[:model], current_user: current_user)
-          render.success? ? respond_with(:message, render[:response]) : answer_callback_query(render[:response], show_alert: true)
+          Event::Operation::Response::KickSelect::Success.call(payload: payload, current_user: current_user, operation: operation)
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Event::Operation::Response::KickSelect::Failure.call(payload: payload, current_user: current_user, operation: operation)
         end
       end
     end
