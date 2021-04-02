@@ -1,7 +1,7 @@
 module InfoActions
   module Help
     def help!(*)
-      respond_with :message, text: t('telegram_webhooks.start.content')
+      Info::Operation::Response::Start::Success.call(current_user, nil, payload)
     end
   end
 end
