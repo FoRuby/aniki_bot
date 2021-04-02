@@ -5,7 +5,7 @@ module EventsActions
         operation = Event::Operation::Edit.call(current_user: current_user, params: { id: event_id })
         if operation.success?
           session[:event_id] = operation[:model].id
-          session[:edit_event] = update.deep_symbolize_keys
+          session[:edit_event] = payload.deep_symbolize_keys
           save_context :update_event
           bot.send_message chat_id: current_user.chat_id, text: t('telegram_webhooks.update_callback_query.success'), alert: true
         else
