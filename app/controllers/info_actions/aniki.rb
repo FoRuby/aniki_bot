@@ -1,7 +1,7 @@
 module InfoActions
   module Aniki
     def aniki!(*)
-      respond_with :photo, photo: image('aniki.jpg'), caption: t('telegram_webhooks.aniki.content')
+      Info::Response::Aniki::Success.call(current_user, nil, payload)
     end
   end
 end

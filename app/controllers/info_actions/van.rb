@@ -1,7 +1,7 @@
 module InfoActions
   module Van
     def van!(*)
-      respond_with :photo, photo: image('van.jpg'), caption: t('telegram_webhooks.van.content')
+      Info::Response::Van::Success.call(current_user, nil, payload)
     end
   end
 end

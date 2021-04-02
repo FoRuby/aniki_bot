@@ -55,3 +55,6 @@
 
 # v_0.3.6
 * Added README.md
+
+# v_0.3.7
+* Refactoring and performance improvements

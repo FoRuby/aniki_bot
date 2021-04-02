@@ -43,9 +43,9 @@ en:
     close_callback_query:
       success: Event was close. See your finance statistic on /me => Finance
     compensation_callback_query:
-      success: Compensation action between %{u1} and %{u2} complete. Compensation sum = %{sum}
-      failure1: "%{u1} trying to compensate a debt. Select /me => Compensation => %{u1} to complete action"
-      failure2: Sending message to %{u2} to complete action
+      success: Compensation action between %{user} and %{opponent} complete. Compensation sum = %{sum}
+      opponent_message: "%{user} trying to compensate a debt. Select /me => Compensation => %{user} to complete action"
+      user_message: "Sending message to %{opponent} to complete action"
     bank_callback_query:
       failure: Something went wrong!
     pay_callback_query:
@@ -83,6 +83,6 @@ en:
     update_event:
       success: Event successfully updated
     refill_borrower:
-      success: Refill action between %{u1} and %{u2} complete. Refill sum = %{refill}
+      success: Refill action between %{creditor} and %{borrower} complete. Refill sum = %{refill}
     feedback:
       success: ♂Aniki♂ will read your complaint and write back to you

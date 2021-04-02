@@ -16,6 +16,8 @@ RSpec.describe Refill, type: :model do
   end
 
   describe 'delegators' do
+    it { should delegate_method(:borrower).to(:debt) }
+    it { should delegate_method(:creditor).to(:debt) }
   end
 
   describe 'nested attributes' do

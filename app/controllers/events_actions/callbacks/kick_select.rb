@@ -5,11 +5,10 @@ module EventsActions
         operation = Event::Operation::Edit.call(current_user: current_user, params: { id: event_id })
         if operation.success?
           session[:event_id] = event_id.to_i
-          session[:edit_event] = update.deep_symbolize_keys
-          render = Render::Operation::UserKickSelect.call(event: operation[:model], current_user: current_user)
-          render.success? ? respond_with(:message, render[:response]) : answer_callback_query(render[:response], show_alert: true)
+          session[:edit_event] = payload.deep_symbolize_keys
+          Event::Response::KickSelect::Success.call(current_user, operation, payload)
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Shared::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end

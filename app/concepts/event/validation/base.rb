@@ -1,5 +1,5 @@
 module Event::Validation
-  class Base < Shared::ApplicationContract
+  class Base < Shared::Contract::Base
     config.messages.namespace = :event
 
     DATE_FORMAT = /\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?\z/.freeze

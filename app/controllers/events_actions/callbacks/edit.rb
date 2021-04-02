@@ -4,10 +4,10 @@ module EventsActions
       def edit_event_callback_query(event_id = nil, *)
         operation = Event::Operation::Edit.call(current_user: current_user, params: { id: event_id })
         if operation.success?
-          session[:show_event] = update.deep_symbolize_keys
-          bot.send_message Render::Operation::EditEvent.call(current_user: current_user, event: operation[:model])[:response]
+          session[:show_event] = payload.deep_symbolize_keys
+          Event::Response::Edit::Success.call(current_user, operation, payload)
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Shared::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end

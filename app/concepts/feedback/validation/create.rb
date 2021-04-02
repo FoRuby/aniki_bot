@@ -1,5 +1,5 @@
 module Feedback::Validation
-  class Create < Shared::ApplicationContract
+  class Create < Shared::Contract::Base
     config.messages.namespace = :feedback
 
     params do

@@ -1,5 +1,5 @@
 module UserEvent::Validation
-  class Update < Shared::ApplicationContract
+  class Update < Shared::Contract::Base
     config.messages.namespace = :user_event
 
     params do
@@ -11,8 +11,9 @@ module UserEvent::Validation
       required(:user_event).filled(type?: UserEvent)
     end
 
-    rule :payment do
+    rule :payment, :user_event do
       key(:payment).failure(:invalid) if values[:payment].negative?
+      key(:payment).failure(:invalid) if values[:user_event].payment == values[:payment]
     end
 
     rule(:event_id) do

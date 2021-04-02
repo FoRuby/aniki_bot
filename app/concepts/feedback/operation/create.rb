@@ -6,15 +6,14 @@ module Feedback::Operation
     step :prepopulate
     step Contract::Validate()
     step Contract::Persist()
-    step :send
+    step :send_feedback
 
     def prepopulate(options, current_user:, **)
       options[:'contract.default'].prepopulate!(user_id: current_user.id)
     end
 
-    def send(options, model:, current_user:, **)
-      text = "From user: #{current_user.tag}\n"
-      ANIKI.send_message chat_id: User.find_by(username: 'r1zrei').chat_id, text: text + model.message
+    def send_feedback(options, model:, current_user:, **)
+      Feedback::Operation::Send.call(current_user: current_user, feedback: model)
     end
   end
 end

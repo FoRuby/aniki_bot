@@ -6,11 +6,9 @@ module EventsActions
           current_user: current_user, params: { event_id: event_id, user_id: current_user.id }
         )
         if operation.success?
-          response = Render::Operation::ShowEvent.call(event: operation[:model].event)[:response]
-          edit_message :text, response
-          answer_callback_query(t('telegram_webhooks.leave_callback_query.success'), show_alert: true)
+          Event::Response::Leave::Success.call(current_user, operation, payload)
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Shared::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end
