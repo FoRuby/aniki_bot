@@ -1,5 +1,5 @@
 module User::Validation
-  class Base < Shared::ApplicationContract
+  class Base < Shared::Contract::Base
     config.messages.namespace = :user
 
     params do

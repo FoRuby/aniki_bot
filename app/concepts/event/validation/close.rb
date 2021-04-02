@@ -1,5 +1,5 @@
 module Event::Validation
-  class Close < Shared::ApplicationContract
+  class Close < Shared::Contract::Base
     config.messages.namespace = :event
 
     params do

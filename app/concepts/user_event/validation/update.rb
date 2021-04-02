@@ -1,5 +1,5 @@
 module UserEvent::Validation
-  class Update < Shared::ApplicationContract
+  class Update < Shared::Contract::Base
     config.messages.namespace = :user_event
 
     params do

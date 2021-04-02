@@ -1,5 +1,5 @@
 module UserEvent::Validation
-  class Base < Shared::ApplicationContract
+  class Base < Shared::Contract::Base
     config.messages.namespace = :user_event
 
     params do

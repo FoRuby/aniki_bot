@@ -1,5 +1,5 @@
-module Shared
-  class ApplicationParser
+module Shared::Parser
+  class Base
     attr_reader :attributes, :params
 
     def initialize(params)

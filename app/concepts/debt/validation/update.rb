@@ -1,5 +1,5 @@
 module Debt::Validation
-  class Update < Shared::ApplicationContract
+  class Update < Shared::Contract::Base
     config.messages.namespace = :debt
 
     params do

@@ -1,5 +1,5 @@
 module Feedback::Parser
-  class Base < Shared::ApplicationParser
+  class Base < Shared::Parser::Base
     def parse
       { message: params.join(' ') }
     end

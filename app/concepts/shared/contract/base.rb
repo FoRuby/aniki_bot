@@ -1,5 +1,5 @@
-module Shared
-  class ApplicationContract < Dry::Validation::Contract
+module Shared::Contract
+  class Base < Dry::Validation::Contract
     config.messages.default_locale = :en
     config.messages.namespace = :common
     config.messages.load_paths << 'config/locales/en.yml'

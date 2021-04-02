@@ -1,5 +1,5 @@
 module Refill::Validation
-  class Create < Shared::ApplicationContract
+  class Create < Shared::Contract::Base
     config.messages.namespace = :refill
 
     params do
