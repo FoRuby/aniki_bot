@@ -3,9 +3,9 @@ module FeedbackActions
     def feedback!(*args)
       operation = Feedback::Operation::Create.call(current_user: current_user, params: Feedback::Parser::Base.call(args))
       if operation.success?
-        respond_with :message, text: t('telegram_webhooks.feedback.success')
+        Feedback::Operation::Response::Create::Success.call(payload: payload, current_user: current_user, operation: operation)
       else
-        bot.send_message chat_id: current_user.chat_id, text: render_errors(operation)
+        Feedback::Operation::Response::Create::Failure.call(payload: payload, current_user: current_user, operation: operation)
       end
     end
   end

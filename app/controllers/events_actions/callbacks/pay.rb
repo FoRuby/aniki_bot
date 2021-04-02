@@ -12,7 +12,7 @@ module EventsActions
           session[:show_event] = payload.deep_symbolize_keys
           bot.send_message chat_id: current_user.chat_id, text: t('telegram_webhooks.pay_callback_query.success')
         else
-          answer_callback_query(render_errors(operation), show_alert: true)
+          Event::Operation::Response::Edit::Failure.call(payload: payload, current_user: current_user, operation: operation)
         end
       end
 
