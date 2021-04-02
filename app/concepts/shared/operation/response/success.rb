@@ -17,5 +17,9 @@ module Shared::Operation::Response
     end
 
     def success_respond; end
+
+    def image(name)
+      File.open(File.join(Rails.root, 'app', 'assets', 'images', name), 'r')
+    end
   end
 end
