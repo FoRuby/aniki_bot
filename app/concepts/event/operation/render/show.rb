@@ -22,8 +22,7 @@ module Event::Operation::Render
             { text: 'Pay', callback_data: "pay:#{event.id}" },
             { text: 'Bank', callback_data: "bank:#{event.id}" }
           ],
-          [{ text: 'Edit', callback_data: "edit_event:#{event.id}" }],
-          [{ text: 'Refresh', callback_data: "refresh_show:#{event.id}" }]
+          [{ text: 'Edit', callback_data: "edit_event:#{event.id}" }]
         ]
       }
     end

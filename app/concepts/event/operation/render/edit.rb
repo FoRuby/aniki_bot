@@ -16,8 +16,7 @@ module Event::Operation::Render
         inline_keyboard: [
           [{ text: 'Close', callback_data: "close:#{event.id}" }],
           [{ text: 'Update', callback_data: "update:#{event.id}" }],
-          [{ text: 'Kick User', callback_data: "kick_select:#{event.id}" }],
-          [{ text: 'Refresh', callback_data: "refresh_edit:#{event.id}" }]
+          [{ text: 'Kick User', callback_data: "kick_select:#{event.id}" }]
         ]
       }
     end
