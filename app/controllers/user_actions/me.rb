@@ -7,6 +7,6 @@ module UserActions::Me
   include UserActions::Callbacks::Statistic
 
   def me!
-    User::Operation::Response::Me::Success.call(current_user, nil, payload)
+    User::Response::Me::Success.call(current_user, nil, payload)
   end
 end

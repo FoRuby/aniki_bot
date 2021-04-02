@@ -5,12 +5,12 @@ module EventsActions
         operation = UserEvent::Operation::Delete.call(current_user: current_user,
                                                       params: { event_id: session[:event_id], user_id: user_id })
         if operation.success?
-          Event::Operation::Response::Kick::Success.call(
+          Event::Response::Kick::Success.call(
             current_user, operation, payload,
             session_payload: { edit_event: session[:edit_event], show_event: session[:show_event] }
           )
         else
-          Shared::Operation::Response::Failure.call(current_user, operation, payload, callback: true)
+          Shared::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end

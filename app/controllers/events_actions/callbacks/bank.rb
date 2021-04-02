@@ -4,9 +4,9 @@ module EventsActions
       def bank_callback_query(event_id = nil, *)
         operation = Event::Operation::Show.call(current_user: current_user, params: { id: event_id })
         if operation.success?
-          Event::Operation::Response::Bank::Success.call(current_user, operation, payload)
+          Event::Response::Bank::Success.call(current_user, operation, payload)
         else
-          Shared::Operation::Response::Failure.call(current_user, operation, payload, callback: true)
+          Shared::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end

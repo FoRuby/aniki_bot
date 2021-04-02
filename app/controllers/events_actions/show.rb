@@ -9,9 +9,9 @@ module EventsActions
     def event!(*args)
       operation = Event::Operation::Show.call(current_user: current_user, params: { id: args.first })
       if operation.success?
-        Event::Operation::Response::Show::Success.call(current_user, operation, payload)
+        Event::Response::Show::Success.call(current_user, operation, payload)
       else
-        Shared::Operation::Response::Failure.call(current_user, operation, payload)
+        Shared::Response::Failure.call(current_user, operation, payload)
       end
     end
   end
