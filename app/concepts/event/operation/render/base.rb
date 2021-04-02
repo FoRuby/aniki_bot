@@ -1,14 +1,10 @@
 module Event::Operation::Render
-  class Base
-    attr_reader :event, :current_user
+  class Base < Shared::Render::Base
+    attr_reader :event
 
-    def initialize(event:, current_user:)
+    def initialize(event:, **args)
+      super(**args)
       @event = event
-      @current_user = current_user
-    end
-
-    def self.call(...)
-      new(...).render
     end
   end
 end
