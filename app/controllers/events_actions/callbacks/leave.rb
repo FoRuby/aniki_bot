@@ -8,7 +8,7 @@ module EventsActions
         if operation.success?
           Event::Operation::Response::Leave::Success.call(payload: payload, current_user: current_user, operation: operation)
         else
-          Event::Operation::Response::Leave::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
         end
       end
     end

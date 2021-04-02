@@ -1,5 +1,5 @@
 module Event::Operation::Response::Pay
-  class Success < Shared::ApplicationResponse
+  class Success < Shared::Operation::Response::Success
     def success_respond
       bot.send_message chat_id: current_user.chat_id, text: I18n.t('telegram_webhooks.pay.success')
       bot.edit_message_text render.merge(chat_id: session_payload.dig(:message, :chat, :id),

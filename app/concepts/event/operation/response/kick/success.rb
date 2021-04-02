@@ -1,5 +1,5 @@
 module Event::Operation::Response::Kick
-  class Success < Shared::ApplicationResponse
+  class Success < Shared::Operation::Response::Success
     def success_respond
       bot.answer_callback_query callback_query_id: payload[:id],
                                 text: I18n.t('telegram_webhooks.kick_callback_query.success', value: operation[:model].user.tag),

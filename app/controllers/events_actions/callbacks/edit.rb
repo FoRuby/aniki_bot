@@ -7,7 +7,7 @@ module EventsActions
           session[:show_event] = payload.deep_symbolize_keys
           Event::Operation::Response::Edit::Success.call(payload: payload, current_user: current_user, operation: operation)
         else
-          Event::Operation::Response::Edit::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
         end
       end
     end

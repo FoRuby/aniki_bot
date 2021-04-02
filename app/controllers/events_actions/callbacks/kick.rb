@@ -10,7 +10,7 @@ module EventsActions
             session_payload: { edit_event: session[:edit_event], show_event: session[:show_event] }
           )
         else
-          Event::Operation::Response::Kick::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
         end
       end
     end

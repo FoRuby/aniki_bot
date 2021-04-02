@@ -7,7 +7,7 @@ module EventsActions
           Event::Operation::Response::Close::Success.call(payload: payload, session_payload: session[:show_event],
                                                           current_user: current_user, operation: operation)
         else
-          Event::Operation::Response::Close::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
         end
       end
     end

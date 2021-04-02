@@ -1,8 +1,8 @@
-module Shared
-  class ApplicationResponse
-    attr_reader :payload, :current_user, :operation, :bot, :chat_id, :message_id, :session_payload, :errors
+module Shared::Operation::Response
+  class Failure
+    attr_reader :payload, :current_user, :operation, :bot, :chat_id, :message_id, :session_payload, :callback, :errors
 
-    def initialize(payload:, current_user:, operation:, session_payload: nil, errors: [])
+    def initialize(payload:, current_user:, operation:, session_payload: nil, errors: [], callback: false)
       @current_user = current_user
       @operation = operation
       @payload = payload.deep_symbolize_keys
@@ -10,16 +10,15 @@ module Shared
       @message_id = @payload[:message_id] || @payload.dig(:message, :message_id)
       @errors = errors
       @session_payload = session_payload
+      @callback = callback
       @bot = ANIKI
     end
 
     def self.call(...)
-      new(...).success_respond
+      new(...).failure_respond
     end
 
-    def success_respond; end
-
-    def failure_respond(callback: false)
+    def failure_respond
       if callback
         bot.answer_callback_query callback_query_id: payload[:id], text: errors_msg, show_alert: true
       else

@@ -1,5 +1,5 @@
 module Event::Operation::Response::Close
-  class Success < Shared::ApplicationResponse
+  class Success < Shared::Operation::Response::Success
     def success_respond
       bot.send_message chat_id: session_payload.dig(:message, :chat, :id),
                        text: I18n.t('telegram_webhooks.close_callback_query.success')

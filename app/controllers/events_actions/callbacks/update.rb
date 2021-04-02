@@ -9,7 +9,7 @@ module EventsActions
           session[:edit_event] = payload.deep_symbolize_keys
           bot.send_message chat_id: current_user.chat_id, text: t('telegram_webhooks.update_callback_query.success')
         else
-          Event::Operation::Response::Edit::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
         end
       end
 
@@ -24,7 +24,7 @@ module EventsActions
             session_payload: { edit_event: session[:edit_event], show_event: session[:show_event] }
           )
         else
-          Event::Operation::Response::Update::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation)
         end
       end
     end

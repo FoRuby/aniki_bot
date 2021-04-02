@@ -1,5 +1,5 @@
 module Event::Operation::Response::Create
-  class Success < Shared::ApplicationResponse
+  class Success < Shared::Operation::Response::Success
     def success_respond
       respond_msg
       return if respond_msg.dig(:result, :chat, :type) != 'supergroup'

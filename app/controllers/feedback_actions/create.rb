@@ -5,7 +5,7 @@ module FeedbackActions
       if operation.success?
         Feedback::Operation::Response::Create::Success.call(payload: payload, current_user: current_user, operation: operation)
       else
-        Feedback::Operation::Response::Create::Failure.call(payload: payload, current_user: current_user, operation: operation)
+        Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation)
       end
     end
   end

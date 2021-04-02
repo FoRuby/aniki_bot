@@ -1,5 +1,5 @@
 module Event::Operation::Response::Join
-  class Success < Shared::ApplicationResponse
+  class Success < Shared::Operation::Response::Success
     def success_respond
       bot.edit_message_text render.merge(chat_id: chat_id, message_id: message_id)
       bot.answer_callback_query callback_query_id: payload[:id],

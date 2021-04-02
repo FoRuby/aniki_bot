@@ -1,5 +1,5 @@
 module Event::Operation::Response::KickSelect
-  class Success < Shared::ApplicationResponse
+  class Success < Shared::Operation::Response::Success
     def success_respond
       respond_msg
     end
