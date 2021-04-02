@@ -83,6 +83,6 @@ en:
     update_event:
       success: Event successfully updated
     refill_borrower:
-      success: Refill action between %{u1} and %{u2} complete. Refill sum = %{refill}
+      success: Refill action between %{creditor} and %{borrower} complete. Refill sum = %{refill}
     feedback:
       success: ♂Aniki♂ will read your complaint and write back to you
