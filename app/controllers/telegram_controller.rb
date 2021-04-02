@@ -8,7 +8,6 @@ class TelegramController < Telegram::Bot::UpdatesController
   include CallbackQueryContext
   use_session!
 
-  include BaseController
   include InfosController
   include FeedbacksController
   include EventsController
