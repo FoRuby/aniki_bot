@@ -4,10 +4,9 @@ module EventsActions
       def close_callback_query(event_id = nil, *)
         operation = Event::Operation::Close.call(current_user: current_user, params: { id: event_id })
         if operation.success?
-          Event::Operation::Response::Close::Success.call(payload: payload, session_payload: session[:show_event],
-                                                          current_user: current_user, operation: operation)
+          Event::Operation::Response::Close::Success.call(current_user, operation, payload, session_payload: session[:show_event])
         else
-          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
+          Shared::Operation::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end

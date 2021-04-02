@@ -12,7 +12,7 @@ module EventsActions
           session[:show_event] = payload.deep_symbolize_keys
           bot.send_message chat_id: current_user.chat_id, text: t('telegram_webhooks.pay_callback_query.success')
         else
-          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
+          Shared::Operation::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
 
@@ -24,10 +24,9 @@ module EventsActions
           params: { user_id: current_user.id, event_id: session[:event_id], payment: args.first.to_f }
         )
         if operation.success?
-          Event::Operation::Response::Pay::Success.call(payload: payload, session_payload: session[:show_event],
-                                                        current_user: current_user, operation: operation)
+          Event::Operation::Response::Pay::Success.call(current_user, operation, payload, session_payload: session[:show_event])
         else
-          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation)
+          Shared::Operation::Response::Failure.call(current_user, operation, payload)
         end
       end
     end

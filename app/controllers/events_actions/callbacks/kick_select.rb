@@ -6,9 +6,9 @@ module EventsActions
         if operation.success?
           session[:event_id] = event_id.to_i
           session[:edit_event] = payload.deep_symbolize_keys
-          Event::Operation::Response::KickSelect::Success.call(payload: payload, current_user: current_user, operation: operation)
+          Event::Operation::Response::KickSelect::Success.call(current_user, operation, payload)
         else
-          Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation, callback: true)
+          Shared::Operation::Response::Failure.call(current_user, operation, payload, callback: true)
         end
       end
     end

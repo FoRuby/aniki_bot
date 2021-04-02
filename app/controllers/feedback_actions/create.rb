@@ -3,9 +3,9 @@ module FeedbackActions
     def feedback!(*args)
       operation = Feedback::Operation::Create.call(current_user: current_user, params: Feedback::Parser::Base.call(args))
       if operation.success?
-        Feedback::Operation::Response::Create::Success.call(payload: payload, current_user: current_user, operation: operation)
+        Feedback::Operation::Response::Create::Success.call(current_user, operation, payload)
       else
-        Shared::Operation::Response::Failure.call(payload: payload, current_user: current_user, operation: operation)
+        Shared::Operation::Response::Failure.call(current_user, operation, payload)
       end
     end
   end

@@ -1,15 +1,12 @@
 module Shared::Operation::Response
   class Failure
-    attr_reader :payload, :current_user, :operation, :bot, :chat_id, :message_id, :session_payload, :callback, :errors
+    attr_reader :payload, :current_user, :operation, :bot, :callback, :errors
 
-    def initialize(payload:, current_user:, operation:, session_payload: nil, errors: [], callback: false)
+    def initialize(current_user, operation, payload, errors: [], callback: false)
       @current_user = current_user
       @operation = operation
       @payload = payload.deep_symbolize_keys
-      @chat_id = @payload.dig(:chat, :id) || @payload.dig(:message, :chat, :id)
-      @message_id = @payload[:message_id] || @payload.dig(:message, :message_id)
       @errors = errors
-      @session_payload = session_payload
       @callback = callback
       @bot = ANIKI
     end
