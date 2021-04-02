@@ -50,8 +50,8 @@ RSpec.describe UserEvent::Operation::Update do
         let(:user) { event_member }
         let(:params) { { user_id: user.id, event_id: event.id, payment: 'foobar' } }
 
-        it { should be_success }
-        it { expect(operation[:model].payment.format).to eq '0.00 ₽' }
+        it { should be_failure }
+        it { expect(operation_errors(operation)).to include 'Payment invalid. Event payment sum must be greater then 0' }
       end
 
       describe 'negative first payment' do
