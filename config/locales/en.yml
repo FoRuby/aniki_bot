@@ -12,6 +12,7 @@ en:
         rules:
           event:
             close: is already close
+            invalid_cost: can't be closed. Event costs greater then payments
           date:
             already_past: must be in future
       user_event:
@@ -22,6 +23,8 @@ en:
             close: is already close
           payment:
             invalid: invalid. Event payment sum must be greater then 0
+          cost:
+            invalid: invalid. Event cost must be greater then 0
       refill:
         rules:
           value:
@@ -50,6 +53,8 @@ en:
       failure: Something went wrong!
     pay_callback_query:
       success: Enter event payment
+    cost_callback_query:
+      success: Enter event cost
     kick_callback_query:
       success: You kicked out %{value}
     start:
@@ -80,6 +85,8 @@ en:
       command: Can not perform %{command}
     pay:
       success: Payment accepted
+    cost:
+      success: Cost accepted
     update_event:
       success: Event successfully updated
     refill_borrower:

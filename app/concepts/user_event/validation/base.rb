@@ -5,7 +5,6 @@ module UserEvent::Validation
     params do
       required(:user_id).filled(:integer)
       required(:payment).filled(type?: Money)
-      required(:debt).filled(type?: Money)
     end
   end
 end

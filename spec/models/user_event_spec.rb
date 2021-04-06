@@ -8,7 +8,7 @@ RSpec.describe UserEvent, type: :model do
 
   describe 'validations' do
     it { should monetize(:payment) }
-    it { should monetize(:debt) }
+    it { should monetize(:cost) }
   end
 
   describe 'delegators' do

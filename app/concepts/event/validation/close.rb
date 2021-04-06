@@ -4,11 +4,13 @@ module Event::Validation
 
     params do
       required(:id).filled(:integer)
-      required(:status).filled(:string)
+      required(:status).filled(:symbol)
+      required(:event).filled(type?: Event)
     end
 
-    rule :status do
-      key(:event).failure(:close) if value.close?
+    rule :event do
+      key(:event).failure(:close) if value.status.close?
+      key(:event).failure(:invalid_cost) if value.user_events.sum(&:cost) > value.user_events.sum(&:payment)
     end
   end
 end

@@ -1,38 +1,52 @@
 module Event::Operation
   class Close < Trailblazer::Operation
-    attr_reader :event_bank, :user_events
+    attr_reader :major_bank, :user_events, :majors, :minors
 
     step Model(Event, :find_by)
     step Policy::Pundit(EventPolicy, :close?)
-    step Contract::Build(constant: Event::Contract::Close)
+    step Contract::Build(constant: Event::Contract::Close, builder: :default_contract!)
+    step :prepopulate!
     step Contract::Validate()
-    step :update_event_status
-    step :distribute_debts
-    step :create_debts
+    step Contract::Persist()
+    step :required_payment!
+    step :user_events!
+    step :majors!
+    step :minors!
+    step :create_debts!
 
-    def update_event_status(options, model:, **)
-      model.update(status: :close)
+    def prepopulate!(options, **)
+      options[:'contract.default'].prepopulate!(status: :close)
     end
 
-    def distribute_debts(options, model:, **)
-      @user_events = model.user_events.includes(:user)
-      required_payment ||= user_events.map(&:payment).sum / user_events.count
-      user_events.each { |i| i.update(debt: i.payment - required_payment) }
+    def default_contract!(options, constant:, model:, **)
+      constant.new(model, event: model)
     end
 
-    def create_debts(options, **)
-      options[:debts] = []
-      major_bank ||= user_events.majors.map(&:debt).sum
-      user_events.majors.each do |user_event_major|
-        user_events.minors.each do |user_event_minor|
-          options[:debts] << Debt::Operation::Create.call(
-            params: {
-              creditor: user_event_major.user,
-              borrower: user_event_minor.user,
-              coefficient: user_event_major.debt / major_bank,
-              value: user_event_minor.debt
-            }
-          )[:model]
+    def required_payment!(options, model:, **)
+      @required_payment = model.user_events.map(&:payment).sum / model.user_events.count
+    end
+
+    def user_events!(options, model:, **)
+      @user_events = model.user_events.map do |user_event|
+        user_event.debt = user_event.payment - (user_event.cost.zero? ? @required_payment : user_event.cost)
+        user_event
+      end
+    end
+
+    def majors!(options, model:, **)
+      @majors = model.user_events.select { |user_event| user_event.debt.positive? }
+      @major_bank = @majors.map(&:debt).sum
+    end
+
+    def minors!(options, model:, **)
+      @minors = model.user_events.select { |user_event| user_event.debt.negative? }
+    end
+
+    def create_debts!(options, **)
+      options[:debts] = majors.each_with_object([]) do |major, arr|
+        minors.each do |minor|
+          params = { creditor: major.user, borrower: minor.user, value: minor.debt * (major.debt / major_bank) }
+          arr << Debt::Operation::Create.call(params: params)[:model]
         end
       end
     end
