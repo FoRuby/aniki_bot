@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_05_222105) do
+ActiveRecord::Schema.define(version: 2021_04_10_181752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,8 +70,8 @@ ActiveRecord::Schema.define(version: 2021_04_05_222105) do
     t.string "payment_currency", default: "RUB", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "cost_kopecks", default: 0, null: false
-    t.string "cost_currency", default: "RUB", null: false
+    t.integer "cost_kopecks"
+    t.string "cost_currency"
     t.index ["event_id"], name: "index_user_events_on_event_id"
     t.index ["user_id", "event_id"], name: "index_user_events_on_user_id_and_event_id", unique: true
     t.index ["user_id"], name: "index_user_events_on_user_id"

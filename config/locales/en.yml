@@ -44,7 +44,7 @@ en:
     refill_borrower_callback_query:
       success: Input Borrower payment
     close_callback_query:
-      success: Event was close. See your finance statistic on /me => Finance
+      success: Event has been closed. See your finance statistic on /me => Finance
     compensation_callback_query:
       success: Compensation action between %{user} and %{opponent} complete. Compensation sum = %{sum}
       opponent_message: "%{user} trying to compensate a debt. Select /me => Compensation => %{user} to complete action"

@@ -1,5 +1,6 @@
 class TelegramController < Telegram::Bot::UpdatesController
   before_action :authenticate_user!
+  around_action :errors_handler
 
   attr_reader :current_user
 
@@ -26,5 +27,12 @@ class TelegramController < Telegram::Bot::UpdatesController
     params = User::Parser::Base.call(from)
     @current_user = User::Operation::Update.call(params: params)[:model]
     @current_user ||= User::Operation::Create.call(params: params)[:model]
+  end
+
+  # TODO: improve error handling
+  def errors_handler
+    yield
+  rescue Telegram::Bot::Error => e
+    reply_with :message, text: e.message
   end
 end

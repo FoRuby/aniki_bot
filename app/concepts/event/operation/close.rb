@@ -1,6 +1,6 @@
 module Event::Operation
   class Close < Trailblazer::Operation
-    attr_reader :major_bank, :user_events, :majors, :minors
+    attr_reader :major_bank, :user_events, :majors, :minors, :required_payment
 
     step Model(Event, :find_by)
     step Policy::Pundit(EventPolicy, :close?)
@@ -23,12 +23,13 @@ module Event::Operation
     end
 
     def required_payment!(options, model:, **)
-      @required_payment = model.user_events.map(&:payment).sum / model.user_events.count
+      @required_payment = Money.new(model.user_events.map(&:payment).sum / model.user_events.count, 'RUB')
     end
 
     def user_events!(options, model:, **)
       @user_events = model.user_events.map do |user_event|
-        user_event.debt = user_event.payment - (user_event.cost.zero? ? @required_payment : user_event.cost)
+        user_event.cost ||= required_payment
+        user_event.debt = user_event.payment - user_event.cost
         user_event
       end
     end

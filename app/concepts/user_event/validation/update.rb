@@ -7,7 +7,7 @@ module UserEvent::Validation
       required(:user_id).filled(:integer)
       required(:event_id).filled(:integer)
       optional(:payment).filled(type?: Money)
-      optional(:cost).filled(type?: Money)
+      optional(:cost)
       required(:user_event).filled(type?: UserEvent)
     end
 
@@ -18,7 +18,7 @@ module UserEvent::Validation
     end
 
     rule :cost do
-      key(:cost).failure(:invalid) if value.negative?
+      key(:cost).failure(:invalid) if value&.negative?
     end
 
     rule(:event_id) do

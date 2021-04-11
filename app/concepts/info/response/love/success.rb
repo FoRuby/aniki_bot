@@ -1,5 +1,17 @@
 module Info::Response::Love
   class Success < Shared::Response::Success
+    LOVE_QUOTES =
+      [
+        'You are the coolest!',
+        "You're breathtaking!",
+        'I love you!',
+        'You will succeed!',
+        'Do not be sad!',
+        'You make me happier!',
+        'God bless you!',
+        'Shall we take a walk today?'
+      ].freeze
+
     attr_reader :input
 
     def initialize(*args, input)
@@ -12,31 +24,21 @@ module Info::Response::Love
     end
 
     def love
-      if input.include? '@GachiBuhgalterBot'
-        bot.send_animation chat_id: chat_id, animation: image('predator_handshake.gif'), caption: 'Take it boy!'
+      User.where(username: input.map { |username| username[1..] }).each do |user|
+        user.username == bot.username ? love_to_aniki : love_to(user)
       end
+    end
 
-      input.map { |usertag| usertag[1..-1] }
-           .map { |username| User.find_by_username(username) }
-           .compact
-           .each { |user| bot.send_message chat_id: user.chat_id, text: "#{current_user.tag} loves you!" }
+    def love_to_aniki
+      bot.send_animation chat_id: current_user.chat_id, animation: image('predator_handshake.gif'), caption: 'Take it boy!'
+    end
+
+    def love_to(user)
+      bot.send_message chat_id: user.chat_id, text: "#{current_user.tag} loves you!"
     end
 
     def support
-      bot.send_message text: love_quotes.sample, chat_id: chat_id, reply_to_message_id: message_id
-    end
-
-    def love_quotes
-      [
-        'You are the coolest!',
-        "You're breathtaking!",
-        'I love you!',
-        'You will succeed!',
-        'Do not be sad!',
-        'You make me happier!',
-        'God bless you!',
-        'Shall we take a walk today?'
-      ]
+      bot.send_message text: LOVE_QUOTES.sample, chat_id: chat_id, reply_to_message_id: message_id
     end
   end
 end

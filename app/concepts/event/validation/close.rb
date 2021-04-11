@@ -10,7 +10,9 @@ module Event::Validation
 
     rule :event do
       key(:event).failure(:close) if value.status.close?
-      key(:event).failure(:invalid_cost) if value.user_events.sum(&:cost) > value.user_events.sum(&:payment)
+      if value.user_events.reject { |user_event| user_event.cost.nil? }.sum(&:cost) > value.user_events.sum(&:payment)
+        key(:event).failure(:invalid_cost)
+      end
     end
   end
 end

@@ -14,9 +14,10 @@ module Event::Render
     end
 
     def costs
-      str = event.user_events.includes(:user).map do |i|
-        "#{i.user.tag} | #{i.cost.format}" if i.cost.positive?
-      end.join("\n")
+      str = event.user_events
+                 .includes(:user)
+                 .reject { |user_event| user_event.cost.nil? }
+                 .map { |i| "#{i.user.tag} | #{i.cost.format}" }.join("\n")
       str.present? ? str.prepend("Costs:\n") : ''
     end
 
