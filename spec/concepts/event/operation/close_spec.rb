@@ -60,30 +60,6 @@ RSpec.describe Event::Operation::Close do
         it { expect { operation }.to change(Debt, :count).by(2) }
         it { expect(operation[:debts].map(&:value).map(&:format).sort).to match_array ['100.00 ₽', '50.00 ₽'] }
       end
-
-      describe '4 event members with 1 cost' do
-        before do
-          [{ current_user: event_member1, payment: 300 }, { current_user: event_member2, payment: 200 }].each do |h|
-            UserEvent::Operation::Create.call(current_user: h[:current_user],
-                                              params: { event_id: event.id, user_id: h[:current_user].id })
-            UserEvent::Operation::Update.call(
-              current_user: h[:current_user],
-              params: { event_id: event.id, user_id: h[:current_user].id, payment: h[:payment] }
-            )
-            UserEvent::Operation::Create.call(current_user: event_member3,
-                                              params: { event_id: event.id, user_id: event_member3.id })
-            UserEvent::Operation::Update.call(
-              current_user: event_member3,
-              params: { event_id: event.id, user_id: event_member3.id, cost: 150 }
-            )
-
-          end
-        end
-
-        it { should be_success }
-        it { expect { operation }.to change(Debt, :count).by(4) }
-        it { expect(operation[:debts].map(&:value).map(&:format).sort).to match_array ['105.00 ₽', '37.50 ₽', '45.00 ₽', '87.50 ₽'] }
-      end
     end
 
     describe 'invalid params' do

@@ -18,10 +18,7 @@ module Event::Render
             { text: 'Join', callback_data: "join:#{event.id}" },
             { text: 'Leave', callback_data: "leave:#{event.id}" }
           ],
-          [
-            { text: 'Pay', callback_data: "pay:#{event.id}" },
-            { text: 'Cost', callback_data: "cost:#{event.id}" }
-          ],
+          [{ text: 'Pay', callback_data: "pay:#{event.id}" }],
           [{ text: 'Bank', callback_data: "bank:#{event.id}" }],
           [{ text: 'Edit', callback_data: "edit_event:#{event.id}" }]
         ]

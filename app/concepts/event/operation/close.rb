@@ -28,8 +28,8 @@ module Event::Operation
 
     def user_events!(options, model:, **)
       @user_events = model.user_events.map do |user_event|
-        user_event.cost ||= required_payment
-        user_event.debt = user_event.payment - user_event.cost
+        # user_event.cost ||= required_payment
+        user_event.debt = user_event.payment - required_payment
         user_event
       end
     end

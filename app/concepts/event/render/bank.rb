@@ -5,24 +5,25 @@ module Event::Render
     end
 
     def text
-      payments + costs
+      payments
+      # payments + costs
     end
 
     def payments
       str = event.user_events.includes(:user).map { |i| "#{i.user.tag} | #{i.payment.format}" }.join("\n")
       str.present? ? "#{str.prepend("Payments:\n")}\n" : 'There are no users in the event'
     end
-
-    def costs
-      str = event.user_events
-                 .includes(:user)
-                 .reject { |user_event| user_event.cost.nil? }
-                 .map { |i| "#{i.user.tag} | #{i.cost.format}" }.join("\n")
-      str.present? ? str.prepend("Costs:\n") : ''
-    end
-
-    def default_cost
-      @default_cost ||= event.user_events.map(&:payment).sum / event.user_events.count
-    end
+    #
+    # def costs
+    #   str = event.user_events
+    #              .includes(:user)
+    #              .reject { |user_event| user_event.cost.nil? }
+    #              .map { |i| "#{i.user.tag} | #{i.cost.format}" }.join("\n")
+    #   str.present? ? str.prepend("Costs:\n") : ''
+    # end
+    #
+    # def default_cost
+    #   @default_cost ||= event.user_events.map(&:payment).sum / event.user_events.count
+    # end
   end
 end
