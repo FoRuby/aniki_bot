@@ -1,14 +1,19 @@
 module Event::Validation
-  class Update < Event::Validation::Edit
+  class Update < Shared::Contract::Base
+    config.messages.namespace = :event
+
     DATE_FORMAT = /\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?\z/.freeze
 
     params do
-      required(:name).filled(:string)
-      required(:date).filled(:string, format?: DATE_FORMAT)
+      required(:id).filled(:integer)
+      required(:event).filled(type?: Event)
+      required(:status).filled(:symbol)
+      required(:description).value(:string)
+
+      optional(:date_string).maybe(:string, format?: DATE_FORMAT)
     end
 
-    rule :date do
-      key.failure(:already_past) if value.to_time.past?
-    end
+    rule(:date_string).validate(:future?)
+    rule(:event).validate(:open_event?)
   end
 end

@@ -1,7 +1,7 @@
 module User::Render
   class RefillSelect < Shared::Render::Base
     def render
-      return if borrowers.empty?
+      return if debts.empty?
 
       @render ||= { text: text, parse_mode: 'html', reply_markup: reply_markup }
     end
@@ -11,14 +11,14 @@ module User::Render
     end
 
     def reply_markup
-      inline_keyboard = borrowers.each_with_object([]) do |user, arr|
-        arr << [{ text: user.tag, callback_data: "refill_borrower:#{user.id}" }]
+      inline_keyboard = debts.each_with_object([]) do |debt, arr|
+        arr << [{ text: debt.borrower.tag, callback_data: "refill:#{debt.id}" }]
       end
       { inline_keyboard: inline_keyboard }
     end
 
-    def borrowers
-      @borrowers ||= current_user.positive_borrowers
+    def debts
+      @debts ||= current_user.user_borrowers.positive.includes(:borrower)
     end
   end
 end

@@ -4,11 +4,9 @@ module Event::Validation
 
     params do
       required(:id).filled(:integer)
+      required(:event).filled(type?: Event)
     end
 
-    rule :id do
-      event = Event.find_by(id: value)
-      key(:event).failure(:close) if event&.close?
-    end
+    rule(:event).validate(:open_event?)
   end
 end

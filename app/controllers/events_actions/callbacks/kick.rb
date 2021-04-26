@@ -1,7 +1,7 @@
 module EventsActions
   module Callbacks
     module Kick
-      def kick_callback_query(user_id = nil, *)
+      def kick_event_callback_query(user_id = nil, *)
         operation = UserEvent::Operation::Delete.call(current_user: current_user,
                                                       params: { event_id: session[:event_id], user_id: user_id })
         if operation.success?

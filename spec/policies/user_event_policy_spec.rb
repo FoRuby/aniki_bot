@@ -111,4 +111,28 @@ RSpec.describe UserEventPolicy do
       it { should be_falsey }
     end
   end
+
+  describe '#add_admin?' do
+    subject { policy.apply(:delete?) }
+
+    describe 'event_member' do
+      let(:user) { event_member }
+      it { should be_truthy }
+    end
+
+    describe 'event_admin' do
+      let(:user) { event_admin }
+      it { should be_truthy }
+    end
+
+    describe 'user' do
+      let(:user) { create :user }
+      it { should be_falsey }
+    end
+
+    describe 'nil' do
+      let(:user) { nil }
+      it { should be_falsey }
+    end
+  end
 end

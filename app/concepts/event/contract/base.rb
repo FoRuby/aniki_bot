@@ -1,9 +1,12 @@
 module Event::Contract
   class Base < Reform::Form
+    property :id
     property :name
-    property :date
-    property :status, default: :open
+    property :date, format: :date
+    property :status, default: :open, prepopulator: ->(options) { self.status = options[:status] || :open }
+    property :description
 
-    validation contract: ::Event::Validation::Base.new
+    property :date_string, virtual: true
+    property :event, virtual: true
   end
 end

@@ -24,6 +24,7 @@ RSpec.describe Event::Operation::Close do
         end
         it { should be_success }
         it { expect { operation }.to change(Debt, :count).by(1) }
+        it { expect { operation }.to change(Refill, :count).by(1) }
         it { expect(operation[:debts].map(&:value).map(&:format).sort).to match_array ['150.00 ₽'] }
       end
 
@@ -41,6 +42,7 @@ RSpec.describe Event::Operation::Close do
 
         it { should be_success }
         it { expect { operation }.to change(Debt, :count).by(1) }
+        it { expect { operation }.to change(Refill, :count).by(1) }
         it { expect(operation[:debts].map(&:value).map(&:format).sort).to match_array ['100.00 ₽'] }
       end
 
@@ -58,6 +60,7 @@ RSpec.describe Event::Operation::Close do
 
         it { should be_success }
         it { expect { operation }.to change(Debt, :count).by(2) }
+        it { expect { operation }.to change(Refill, :count).by(2) }
         it { expect(operation[:debts].map(&:value).map(&:format).sort).to match_array ['100.00 ₽', '50.00 ₽'] }
       end
     end

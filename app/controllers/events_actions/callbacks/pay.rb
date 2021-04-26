@@ -1,7 +1,7 @@
 module EventsActions
   module Callbacks
     module Pay
-      def pay_callback_query(event_id = nil, *)
+      def pay_event_callback_query(event_id = nil, *)
         operation = UserEvent::Operation::Edit.call(
           current_user: current_user,
           params: { user_id: current_user.id, event_id: event_id }

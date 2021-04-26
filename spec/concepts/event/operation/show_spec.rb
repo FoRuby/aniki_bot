@@ -30,8 +30,8 @@ RSpec.describe Event::Operation::Show do
         let(:user) { create :user }
         let(:params) { { id: event.id } }
 
-        it { should be_failure }
-        it { expect(operation[:"result.policy.default"]).to be }
+        it { should be_success }
+        it { expect(operation[:model]).to eq event }
       end
     end
   end

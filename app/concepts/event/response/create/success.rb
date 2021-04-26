@@ -13,7 +13,7 @@ module Event::Response::Create
     end
 
     def render
-      Event::Render::Show.call(event: operation[:model], current_user: current_user)
+      Event::Render::Show.call(event: model, current_user: current_user)
     end
   end
 end

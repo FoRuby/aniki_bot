@@ -1,6 +1,6 @@
 class EventPolicy < ApplicationPolicy
   def show?
-    member?
+    user
   end
 
   def show_last?
@@ -8,19 +8,19 @@ class EventPolicy < ApplicationPolicy
   end
 
   def create?
-    user
+    show?
   end
 
   def edit?
-    admin?
+    update?
   end
 
   def update?
-    admin?
+    admin? && member?
   end
 
   def close?
-    admin?
+    update?
   end
 
   private

@@ -3,7 +3,7 @@ module UserEvent::Contract
     property :user_id
     property :event_id
     property :payment
-    property :debt
+    property :debt, virtual: true
 
     validation contract: ::UserEvent::Validation::Base.new
   end

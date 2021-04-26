@@ -7,7 +7,7 @@ RSpec.describe Refill, type: :model do
 
   describe 'validations' do
     it do
-      should enumerize(:status).in(:created, :completed)
+      should enumerize(:status).in(:created, :completed, :rollback)
                                     .with_default(:created)
                                     .with_predicates(true)
     end

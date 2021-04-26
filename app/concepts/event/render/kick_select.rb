@@ -10,7 +10,7 @@ module Event::Render
 
     def reply_markup
       inline_keyboard = event.users.where.not(id: current_user.id).each_with_object([]) do |user, arr|
-        arr << [{ text: user.tag, callback_data: "kick:#{user.id}" }]
+        arr << [{ text: user.tag, callback_data: "kick_event:#{user.id}" }]
       end
       { inline_keyboard: inline_keyboard }
     end

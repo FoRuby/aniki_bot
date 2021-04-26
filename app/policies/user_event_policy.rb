@@ -15,6 +15,10 @@ class UserEventPolicy < ApplicationPolicy
     member? || admin?
   end
 
+  def add_admin?
+    member? || admin?
+  end
+
   private
 
   def member?

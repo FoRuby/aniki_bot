@@ -1,4 +1,7 @@
 module UserEvent::Operation
+  # UserEvent::Operation::Update.call(current_user: current_user,
+  #   params: { user_id: user_id, event_id: event_id, payment: payment }
+  # )
   class Update < Trailblazer::Operation
     step :model!
     step Policy::Pundit(UserEventPolicy, :update?)

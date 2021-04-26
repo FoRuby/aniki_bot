@@ -1,8 +1,8 @@
 module UserActions::Me
-  include UserActions::Callbacks::RefillBorrowerSelect
-  include UserActions::Callbacks::CompensationSelect
   include UserActions::Callbacks::Compensation
-  include UserActions::Callbacks::RefillBorrower
+  include UserActions::Callbacks::CompensationSelect
+  include UserActions::Callbacks::Refill
+  include UserActions::Callbacks::RefillSelect
   include UserActions::Callbacks::Finance
   include UserActions::Callbacks::Statistic
 

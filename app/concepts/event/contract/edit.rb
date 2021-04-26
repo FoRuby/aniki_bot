@@ -1,7 +1,5 @@
 module Event::Contract
-  class Edit < Reform::Form
-    property :id
-
-    validation contract: ::Event::Validation::Edit.new
+  class Edit < Event::Contract::Base
+    validation contract: ::Event::Validation::Edit.new, default: true
   end
 end

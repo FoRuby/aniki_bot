@@ -9,7 +9,7 @@ module Event::Response::Edit
     end
 
     def render
-      Event::Render::Edit.call(event: operation[:model], current_user: current_user)
+      Event::Render::Edit.call(event: model, current_user: current_user)
     end
   end
 end

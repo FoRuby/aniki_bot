@@ -16,8 +16,12 @@ RSpec.describe Debt::Operation::Compensation do
 
       it { should be_success }
       it { expect { operation }.to change(Refill, :count).by(2) }
-      it { expect(operation[:debt1].reload.value.format).to eq '150.00 ₽' }
-      it { expect(operation[:debt2].reload.value.format).to eq '0.00 ₽' }
+      it { expect(operation[:debt1].value.format).to eq '150.00 ₽' }
+      it { expect(operation[:refill1].value.format).to eq '-150.00 ₽' }
+      it { expect(operation[:debt1].is_compensation).to be_falsey }
+      it { expect(operation[:debt2].value.format).to eq '0.00 ₽' }
+      it { expect(operation[:refill2].value.format).to eq '-150.00 ₽' }
+      it { expect(operation[:debt2].is_compensation).to be_falsey }
     end
 
     describe 'invalid params' do
@@ -30,6 +34,10 @@ RSpec.describe Debt::Operation::Compensation do
 
         it { should be_failure }
         it { expect { operation }.to_not change(Refill, :count) }
+        it { expect(operation[:debt1].value.format).to eq '300.00 ₽' }
+        it { expect(operation[:debt1].is_compensation).to be_truthy }
+        it { expect(operation[:debt2].value.format).to eq '150.00 ₽' }
+        it { expect(operation[:debt2].is_compensation).to be_falsey }
       end
     end
   end

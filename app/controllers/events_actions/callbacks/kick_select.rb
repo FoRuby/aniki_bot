@@ -1,7 +1,7 @@
 module EventsActions
   module Callbacks
     module KickSelect
-      def kick_select_callback_query(event_id = nil, *)
+      def kick_event_select_callback_query(event_id = nil, *)
         operation = Event::Operation::Edit.call(current_user: current_user, params: { id: event_id })
         if operation.success?
           session[:event_id] = event_id.to_i

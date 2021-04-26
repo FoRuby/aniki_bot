@@ -1,11 +1,10 @@
 module User::Response::Refill
   class Success < Shared::Response::Success
-    attr_reader :form, :refill
+    attr_reader :refill
 
     def initialize(current_user, operation, payload, session_payload: nil)
       super
-      @form = operation[:"contract.default"]
-      @refill = form.refills.last.model
+      @refill = operation[:refill]
     end
 
     def success_respond
@@ -17,7 +16,7 @@ module User::Response::Refill
       I18n.t('telegram_webhooks.refill_borrower.success',
              creditor: refill.creditor.tag,
              borrower: refill.borrower.tag,
-             refill: refill.value.format)
+             refill: refill.value.abs.format)
     end
   end
 end

@@ -9,11 +9,11 @@ module Event::Response::Update
     end
 
     def render_edit
-      Event::Render::Edit.call(event: operation[:model], current_user: current_user)
+      Event::Render::Edit.call(event: model, current_user: current_user)
     end
 
     def render_show
-      Event::Render::Show.call(event: operation[:model], current_user: current_user)
+      Event::Render::Show.call(event: model, current_user: current_user)
     end
   end
 end

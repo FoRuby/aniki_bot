@@ -6,7 +6,7 @@ module Event::Response::KickSelect
 
     def respond_msg
       @respond_msg ||=
-        if operation[:model].users.where.not(id: current_user.id).present?
+        if model.users.where.not(id: current_user.id).present?
           bot.send_message(render.merge(chat_id: chat_id)).deep_symbolize_keys
         else
           bot.answer_callback_query callback_query_id: payload[:id],
@@ -15,7 +15,7 @@ module Event::Response::KickSelect
     end
 
     def render
-      Event::Render::KickSelect.call(event: operation[:model], current_user: current_user)
+      Event::Render::KickSelect.call(event: model, current_user: current_user)
     end
   end
 end

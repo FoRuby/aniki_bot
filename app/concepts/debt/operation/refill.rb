@@ -10,8 +10,9 @@ module Debt::Operation
       options[:model] = debt || Debt.find_by(creditor_id: params[:creditor_id], borrower_id: params[:borrower_id])
     end
 
-    def prepopulate!(options, params:, model:, **)
-      options[:'contract.default'].prepopulate!(debt_id: model.id, value: params[:value], status: :completed)
+    def prepopulate!(options, model:, params:, **)
+      options[:'contract.default']
+        .prepopulate!(refills: [{ debt_id: model.id, value: -1 * params[:value], status: :created }])
     end
 
     def default_contract!(options, constant:, model:, **)

@@ -13,7 +13,7 @@ module User::Render
         inline_keyboard: [
           [{ text: 'Finance', callback_data: "finance:#{current_user.id}" }],
           [{ text: 'Statistic', callback_data: "statistic:#{current_user.id}" }],
-          [{ text: 'Refill', callback_data: "refill_borrower_select:#{current_user.id}" }],
+          [{ text: 'Refill', callback_data: "refill_select:#{current_user.id}" }],
           [{ text: 'Compensation', callback_data: "compensation_select:#{current_user.id}" }]
         ]
       }

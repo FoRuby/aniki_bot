@@ -9,7 +9,7 @@ module Debt::Validation
     end
 
     rule :value do
-      key.failure(:greater_then) if value <= 0
+      key.failure(:positive) if value.negative?
     end
   end
 end

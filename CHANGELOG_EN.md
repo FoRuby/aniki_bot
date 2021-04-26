@@ -63,3 +63,18 @@
 * Added feature to set the Cost value that the event participant had to contribute to the bank. The default Cost value is equal to the amount of payments for the event divided by the number of attendees. Example: User Alice and Bob are participating in an event. Bob paid $ 100 for the event. User Alice has entered a Cost of $ 60. After the event closes, user Alice will owe Bob $ 60.
 * After entering Cost, the corresponding entry appears in the Event Bank
 * Added display of the number of event participants on the Event form
+
+# v_0.3.9
+* Added feature to call the /create_event command without arguments or by omitting some of them,
+  example:
+  - / create_event New Event Name
+  - / create_event New Event Name 19:30
+  - / create_event 19:30
+* /event <ID> command is now available to a user not participating in the event
+* When editing an event, you can now specify only the date or name of the event
+* Added feature to add admins to an event via the event edit form (Edit)
+* Added feature to add a description to the event through the event edit form (Edit), which will be displayed in Info
+* Fixed a bug when creating an event when the date format is not correct
+* The Bank form in the event has been replaced with the Info form, and now contains more information about the event, incl. event description, payments, admins
+* Redesigned the mechanism for closing the event, now the history of all operations with debts is saved
+* Cost Operation has been sent for revision and is not yet available

@@ -4,11 +4,16 @@ module Debt::Validation
 
     params do
       required(:value).filled(type?: Money)
+      optional(:is_compensation).filled(:bool)
       required(:debt).filled(type?: Debt)
     end
 
     rule(:value) do
-      key.failure(:greater_then) if value.negative?
+      key.failure(:positive) if value.negative?
+    end
+
+    rule :value, :debt do
+      key(:value).failure(:positive) if values[:value] == values[:debt].value
     end
   end
 end

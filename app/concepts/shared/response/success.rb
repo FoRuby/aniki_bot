@@ -1,10 +1,11 @@
 module Shared::Response
   class Success
-    attr_reader :payload, :current_user, :operation, :bot, :chat_id, :message_id, :session_payload
+    attr_reader :payload, :current_user, :operation, :model, :bot, :chat_id, :message_id, :session_payload
 
     def initialize(current_user, operation, payload, session_payload: nil)
       @current_user = current_user
       @operation = operation
+      @model = operation[:model] if operation
       @payload = payload.deep_symbolize_keys
       @chat_id = @payload.dig(:chat, :id) || @payload.dig(:message, :chat, :id)
       @message_id = @payload[:message_id] || @payload.dig(:message, :message_id)

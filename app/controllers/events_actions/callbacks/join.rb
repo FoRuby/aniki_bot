@@ -1,7 +1,7 @@
 module EventsActions
   module Callbacks
     module Join
-      def join_callback_query(event_id = nil, *)
+      def join_event_callback_query(event_id = nil, *)
         operation = UserEvent::Operation::Create.call(
           current_user: current_user, params: { event_id: event_id, user_id: current_user.id }
         )

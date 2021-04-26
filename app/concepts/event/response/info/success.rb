@@ -1,4 +1,4 @@
-module Event::Response::Bank
+module Event::Response::Info
   class Success < Shared::Response::Success
     def success_respond
       respond_msg
@@ -9,7 +9,7 @@ module Event::Response::Bank
     end
 
     def render
-      Event::Render::Bank.call(event: operation[:model], current_user: current_user)
+      Event::Render::Info.call(event: model, current_user: current_user)
     end
   end
 end

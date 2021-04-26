@@ -8,7 +8,7 @@ module Event::Response::Leave
     end
 
     def render
-      Event::Render::Show.call(event: operation[:model].event, current_user: current_user)
+      Event::Render::Show.call(event: model.event, current_user: current_user)
     end
   end
 end

@@ -11,10 +11,10 @@ module UserEvent::Validation
       required(:user_event).filled(type?: UserEvent)
     end
 
-    rule :payment do
+    rule :payment, :user_event do
       # TODO extra parameters are loaded
-      key(:payment).failure(:invalid) if value.negative?
-      # key(:payment).failure(:invalid) if value.negative? || value.zero?
+      key(:payment).failure(:invalid) if values[:payment].negative?
+      key(:payment).failure(:invalid) if values[:payment] == values[:user_event].payment
     end
 
     # rule :cost do

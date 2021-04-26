@@ -1,9 +1,5 @@
 module Event::Contract
   class Update < Event::Contract::Base
-    property :id
-    property :name
-    property :date
-
-    validation contract: ::Event::Validation::Update.new
+    validation contract: ::Event::Validation::Update.new, default: true
   end
 end

@@ -14,7 +14,8 @@ en:
             close: is already close
             invalid_cost: can't be closed. Event costs greater then payments
           date:
-            already_past: must be in future
+            past: must be in future
+            invalid: is in invalid format
       user_event:
         rules:
           user:
@@ -28,11 +29,11 @@ en:
       refill:
         rules:
           value:
-            greater_then: invalid, must be greater then 0
+            invalid: invalid
       debt:
         rules:
           value:
-            greater_then: invalid, Debt sum must be greater then 0
+            positive: invalid, Debt sum must be greater then 0
 
   telegram_webhooks:
     join_callback_query:
@@ -41,6 +42,8 @@ en:
       success: You left the event
     update_callback_query:
       success: 'Input new event name and date. Example: NewName 2020-10-20 11:11'
+    description_callback_query:
+      success: Input new event description
     refill_borrower_callback_query:
       success: Input Borrower payment
     close_callback_query:
@@ -57,11 +60,13 @@ en:
       success: Enter event cost
     kick_callback_query:
       success: You kicked out %{value}
+    add_admin_callback_query:
+      success: You promote %{value}
     start:
       content: |
         Hello ma ♂BOY♂:
         /create_event <name> <date> <time> - Create Event
-          Sample: /create_event TestEvent 2020-10-20 11:11
+          Sample: /create_event New Event Name 2020-10-20 11:11
         /event <event_id> - Show event info by selected ID.
           Sample: /event 1
         /last_event - Show user last event
@@ -89,6 +94,8 @@ en:
       success: Cost accepted
     update_event:
       success: Event successfully updated
+    update_event_description:
+      success: Event description successfully updated
     refill_borrower:
       success: Refill action between %{creditor} and %{borrower} complete. Refill sum = %{refill}
     feedback:

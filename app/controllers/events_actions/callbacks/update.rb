@@ -1,7 +1,7 @@
 module EventsActions
   module Callbacks
     module Update
-      def update_callback_query(event_id = nil, *)
+      def update_event_callback_query(event_id = nil, *)
         operation = Event::Operation::Edit.call(current_user: current_user, params: { id: event_id })
         if operation.success?
           save_context :update_event
@@ -16,7 +16,7 @@ module EventsActions
       def update_event(*args)
         return unless current_user.chat_id == payload['chat']['id']
 
-        params = Event::Parser::Base.call(args).merge(id: session[:event_id])
+        params = Event::Parser::Update.call(args).merge(id: session[:event_id])
         operation = Event::Operation::Update.call(current_user: current_user, params: params)
         if operation.success?
           Event::Response::Update::Success.call(

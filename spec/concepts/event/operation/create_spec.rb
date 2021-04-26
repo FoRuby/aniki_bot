@@ -24,7 +24,14 @@ RSpec.describe Event::Operation::Create do
       describe 'invalid date format' do
         let(:params) { { name: 'test', date: '2021-01-01' } }
 
-        it { expect(operation_errors(operation)).to include 'Date is in invalid format' }
+        it { expect(operation_errors(operation)).to include 'Date String is in invalid format' }
+        it_behaves_like 'invalid create event operation'
+      end
+
+      describe 'invalid date format' do
+        let(:params) { { name: 'test', date: '2021-26-04' } }
+
+        it { expect(operation_errors(operation)).to include 'Date String is in invalid format' }
         it_behaves_like 'invalid create event operation'
       end
 

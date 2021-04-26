@@ -6,7 +6,7 @@ RSpec.describe Event::Operation::Update do
     Event::Operation::Create.call(current_user: event_admin, params: attributes_for(:event))[:model]
   end
 
-  subject(:operation) { described_class.call(params: params, current_user: user) }
+  subject(:operation) { described_class.call(current_user: user, params: params) }
 
   describe '.call' do
     describe 'valid params' do
@@ -45,19 +45,19 @@ RSpec.describe Event::Operation::Update do
         it { expect(operation_errors(operation)).to include 'Event is already close' }
       end
 
-      describe 'empty event name' do
-        let(:params) { attributes_for(:event).merge({ id: event.id, name: '' }) }
-
-        it { expect(operation_errors(operation)).to include 'Name must be filled' }
-        it_behaves_like 'invalid update event operation'
-      end
-
-      describe 'invalid date format' do
-        let(:params) { { id: event.id, name: 'test', date: 'foobar' } }
-
-        it { expect(operation_errors(operation)).to include 'Date is in invalid format' }
-        it_behaves_like 'invalid update event operation'
-      end
+      # describe 'empty event name' do
+      #   let(:params) { attributes_for(:event).merge({ id: event.id, name: '' }) }
+      #
+      #   it { expect(operation_errors(operation)).to include 'Name must be filled' }
+      #   it_behaves_like 'invalid update event operation'
+      # end
+      #
+      # describe 'invalid date format' do
+      #   let(:params) { { id: event.id, name: 'test', date: 'foobar' } }
+      #
+      #   it { expect(operation_errors(operation)).to include 'Date is in invalid format' }
+      #   it_behaves_like 'invalid update event operation'
+      # end
 
       describe 'invalid past date' do
         let(:params) { { id: event.id, name: 'test', date: (Time.now - 1.day).strftime('%F %H:%M') } }

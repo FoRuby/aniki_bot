@@ -12,6 +12,8 @@ module Event::Validation
 
     rule :date do
       key.failure(:already_past) if value.to_time.past?
+    rescue ArgumentError
+      key.failure(:invalid)
     end
   end
 end
