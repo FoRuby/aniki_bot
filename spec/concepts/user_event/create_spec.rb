@@ -23,7 +23,7 @@ RSpec.describe UserEvent::Operation::Create do
         let(:params) { { user_id: nil, event_id: event.id } }
 
         it_behaves_like 'invalid create user_event operation'
-        it { expect(operation[:"result.policy.default"]).to be }
+        it { expect(operation['result.policy.default']).to be }
       end
 
       describe 'not existed event_id' do

@@ -20,9 +20,12 @@ module Event::Render
             { text: 'Join', callback_data: "join_event:#{event.id}" },
             { text: 'Leave', callback_data: "leave_event:#{event.id}" }
           ],
+          [
+            { text: 'Info', callback_data: "info_event:#{event.id}" },
+            { text: 'Edit', callback_data: "edit_event:#{event.id}" }
+          ],
           [{ text: 'Pay', callback_data: "pay_event:#{event.id}" }],
-          [{ text: 'Info', callback_data: "info_event:#{event.id}" }],
-          [{ text: 'Edit', callback_data: "edit_event:#{event.id}" }]
+          [{ text: 'Close', callback_data: "close_event_confirmation:#{event.id}" }]
         ]
       }
     end

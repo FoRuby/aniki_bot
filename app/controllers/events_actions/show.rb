@@ -4,7 +4,6 @@ module EventsActions
     include EventsActions::Callbacks::Leave
     include EventsActions::Callbacks::Info
     include EventsActions::Callbacks::Pay
-    include EventsActions::Callbacks::Cost
     include EventsActions::Callbacks::Edit
 
     def event!(*args)

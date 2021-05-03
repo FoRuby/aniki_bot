@@ -1,8 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.telegram_updates_controller.session_store = :redis_store
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -113,9 +111,14 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  routes.default_url_options = {host: 'gachibuhgalter-bot.herokuapp.com', protocol: 'https'}
+  ########################################
+
+  routes.default_url_options = { host: 'gachibuhgalter-bot.herokuapp.com', protocol: 'https' }
+
+  # Configure cache store.
+  config.cache_store = :redis_cache_store, { url: Rails.application.credentials.dig(:redis, :url) }
 
   # Configure session store for telegram bot.
-  config.telegram_updates_controller.session_store = :file_store,
-    Rails.root.join('tmp', 'session_store')
+  config.telegram_updates_controller.session_store = :redis_cache_store, { url: Rails.application.credentials.dig(:redis, :url) }
+  # config.telegram_updates_controller.session_store = :file_store, Rails.root.join('tmp', 'session_store')
 end

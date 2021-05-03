@@ -27,7 +27,7 @@ RSpec.describe UserEvent::Operation::Edit do
         let(:params) { { user_id: event_member.id, event_id: event.id } }
 
         it { should be_failure }
-        it { expect(operation[:"result.policy.default"]).to be }
+        it { expect(operation['result.policy.default']).to be }
       end
 
       describe 'closed event' do

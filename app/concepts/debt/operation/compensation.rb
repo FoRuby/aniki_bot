@@ -3,9 +3,9 @@ module Debt::Operation
     step :opponent!
     step :debt1!
     step :debt2!
+    step :compensate
     step :update_debt1
     step :consent?
-    step :compensate
     step :refill_debts
 
     def opponent!(options, params:, **)
@@ -20,16 +20,16 @@ module Debt::Operation
       options[:debt2] = Debt.find_by(creditor: opponent, borrower: current_user)
     end
 
+    def compensate(options, **)
+      options[:compensation] = [options[:debt1].value, options[:debt2].value].min * -1
+    end
+
     def update_debt1(options, **)
       options[:debt1].update(is_compensation: true)
     end
 
     def consent?(options, **)
       options[:debt2].is_compensation
-    end
-
-    def compensate(options, **)
-      options[:compensation] = [options[:debt1].value, options[:debt2].value].min * -1
     end
 
     def refill_debts(options, compensation:, **)

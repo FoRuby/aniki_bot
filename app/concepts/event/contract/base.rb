@@ -2,11 +2,14 @@ module Event::Contract
   class Base < Reform::Form
     property :id
     property :name
-    property :date, format: :date
-    property :status, default: :open, prepopulator: ->(options) { self.status = options[:status] || :open }
+    property :date
+    property :status, prepopulator: :status!
     property :description
 
-    property :date_string, virtual: true
     property :event, virtual: true
+
+    def status!(options)
+      self.status = options[:status]
+    end
   end
 end

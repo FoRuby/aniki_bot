@@ -36,7 +36,7 @@ RSpec.describe UserEvent::Operation::Delete do
         let(:params) { { user_id: event_member.id, event_id: event.id } }
 
         it_behaves_like 'invalid delete user_event operation'
-        it { expect(operation[:"result.policy.default"]).to be }
+        it { expect(operation['result.policy.default']).to be }
       end
 
       describe 'closed event' do

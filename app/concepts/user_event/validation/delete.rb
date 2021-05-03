@@ -1,5 +1,5 @@
 module UserEvent::Validation
-  class Delete < Shared::Contract::Base
+  class Delete < Shared::Contract::DryValidationBase
     config.messages.namespace = :user_event
 
     params do

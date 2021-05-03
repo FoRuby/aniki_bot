@@ -11,6 +11,10 @@ RSpec.describe Event::Operation::Create do
       it { is_expected.to be_success }
       it { expect { operation }.to change(Event, :count).by(1) }
       it { expect { operation }.to change(UserEvent, :count).by(1) }
+      it { expect(operation[:model].status).to eq :open }
+      it { expect(operation[:model].description).to eq '' }
+      it { expect(operation[:model].name).to eq params[:name] }
+      it { expect(operation[:model].date.strftime('%F %H:%M')).to eq params[:date] }
     end
 
     describe 'invalid params' do
@@ -22,21 +26,14 @@ RSpec.describe Event::Operation::Create do
       end
 
       describe 'invalid date format' do
-        let(:params) { { name: 'test', date: '2021-01-01' } }
-
-        it { expect(operation_errors(operation)).to include 'Date String is in invalid format' }
-        it_behaves_like 'invalid create event operation'
-      end
-
-      describe 'invalid date format' do
         let(:params) { { name: 'test', date: '2021-26-04' } }
 
-        it { expect(operation_errors(operation)).to include 'Date String is in invalid format' }
+        it { expect(operation_errors(operation)).to include 'Date must be a time' }
         it_behaves_like 'invalid create event operation'
       end
 
       describe 'invalid past date' do
-        let(:params) { { name: 'test', date: (Time.now - 1.day).strftime('%F %H:%M') } }
+        let(:params) { attributes_for :event, :past }
 
         it { expect(operation_errors(operation)).to include 'Date must be in future' }
         it_behaves_like 'invalid create event operation'

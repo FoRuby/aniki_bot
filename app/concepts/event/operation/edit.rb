@@ -6,7 +6,7 @@ module Event::Operation
     step Contract::Validate()
 
     def default_contract!(options, constant:, model:, **)
-      constant.new(model, event: options[:model])
+      constant.new(model, event: model)
     end
   end
 end

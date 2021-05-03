@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :user_event do
     user
     event
-
     payment { 0 }
   end
 

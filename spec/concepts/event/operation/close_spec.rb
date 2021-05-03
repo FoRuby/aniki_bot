@@ -5,7 +5,7 @@ RSpec.describe Event::Operation::Close do
   let(:event_member1) { create :user }
   let(:event_member2) { create :user }
   let(:event_member3) { create :user }
-  let(:default_params) { attributes_for :event, date: (Time.now + 1.day).strftime('%F %H:%M') }
+  let(:default_params) { attributes_for :event }
   let!(:event) { Event::Operation::Create.call(current_user: event_admin, params: default_params)[:model] }
 
   subject(:operation) { described_class.call(params: params, current_user: user) }

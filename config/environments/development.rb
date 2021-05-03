@@ -1,8 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.telegram_updates_controller.session_store = :redis_store
-
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -62,6 +60,12 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Use memory store for bot sessions.
-  config.telegram_updates_controller.session_store = :redis_store, { expires_in: 1.hour }
+  ########################################
+
+  # Configure cache store.
+  config.cache_store = :redis_cache_store, { url: Rails.application.credentials.dig(:redis, :url) }
+
+  # Configure session store for telegram bot.
+  config.telegram_updates_controller.session_store = :redis_cache_store
+  # config.telegram_updates_controller.session_store = :file_store, Rails.root.join('tmp', 'session_store')
 end

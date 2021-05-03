@@ -1,5 +1,5 @@
 module UserEvent::Validation
-  class Create < Shared::Contract::Base
+  class Create < Shared::Contract::DryValidationBase
     config.messages.namespace = :user_event
     option :record, default: UserEvent.method(:new)
 

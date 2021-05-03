@@ -6,6 +6,6 @@ module Event::Contract
       options[:user_events].each { |user_event_params| user_events << UserEvent.new(user_event_params) }
     end
 
-    validation contract: ::Event::Validation::Create.new, default: true
+    validation contract: ::Event::Validation::Create.new
   end
 end

@@ -20,7 +20,9 @@ module Event::Parser
     end
 
     def date
-      "#{input.scan(DATE_REGEXP).last || Date.today} #{input.scan(TIME_REGEXP).last || (Time.now + 1.hour).beginning_of_hour.strftime('%H:%M')}".strip
+      date = input.scan(DATE_REGEXP).last || Time.zone.now.to_date
+      time = input.scan(TIME_REGEXP).last || (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H:%M')
+      "#{date} #{time}".strip
     end
   end
 end

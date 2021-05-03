@@ -47,11 +47,11 @@ en:
     refill_borrower_callback_query:
       success: Input Borrower payment
     close_callback_query:
-      success: Event has been closed. See your finance statistic on /me => Finance
+      success: Event %{name} has been closed. See your finance statistic on /me => Finance
     compensation_callback_query:
       success: Compensation action between %{user} and %{opponent} complete. Compensation sum = %{sum}
-      opponent_message: "%{user} trying to compensate a debt. Select /me => Compensation => %{user} to complete action"
-      user_message: "Sending message to %{opponent} to complete action"
+      opponent_message: User %{user} trying to compensate  %{sum}. Select OK to complete action
+      user_message: Sending message to %{opponent} to complete action
     bank_callback_query:
       failure: Something went wrong!
     pay_callback_query:

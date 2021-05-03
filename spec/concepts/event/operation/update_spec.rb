@@ -32,7 +32,7 @@ RSpec.describe Event::Operation::Update do
         let(:params) { attributes_for(:event).merge({ id: event.id }) }
 
         it { should be_failure }
-        it { expect(operation[:"result.policy.default"]).to be }
+        it { expect(operation['result.policy.default']).to be }
       end
 
       describe 'closed event' do
@@ -45,22 +45,22 @@ RSpec.describe Event::Operation::Update do
         it { expect(operation_errors(operation)).to include 'Event is already close' }
       end
 
-      # describe 'empty event name' do
-      #   let(:params) { attributes_for(:event).merge({ id: event.id, name: '' }) }
-      #
-      #   it { expect(operation_errors(operation)).to include 'Name must be filled' }
-      #   it_behaves_like 'invalid update event operation'
-      # end
-      #
-      # describe 'invalid date format' do
-      #   let(:params) { { id: event.id, name: 'test', date: 'foobar' } }
-      #
-      #   it { expect(operation_errors(operation)).to include 'Date is in invalid format' }
-      #   it_behaves_like 'invalid update event operation'
-      # end
+      describe 'empty event name' do
+        let(:params) { attributes_for(:event).merge({ id: event.id, name: '' }) }
+
+        it { expect(operation_errors(operation)).to include 'Name must be filled' }
+        it_behaves_like 'invalid update event operation'
+      end
+
+      describe 'invalid date format' do
+        let(:params) { { id: event.id, name: 'test', date: 'foobar' } }
+
+        it { expect(operation_errors(operation)).to include 'Date must be a time' }
+        it_behaves_like 'invalid update event operation'
+      end
 
       describe 'invalid past date' do
-        let(:params) { { id: event.id, name: 'test', date: (Time.now - 1.day).strftime('%F %H:%M') } }
+        let(:params) { attributes_for(:event, :past).merge({ id: event.id }) }
 
         it { expect(operation_errors(operation)).to include 'Date must be in future' }
         it_behaves_like 'invalid update event operation'

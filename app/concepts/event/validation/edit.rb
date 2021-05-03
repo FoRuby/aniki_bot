@@ -1,5 +1,5 @@
 module Event::Validation
-  class Edit < Shared::Contract::Base
+  class Edit < Shared::Contract::DryValidationBase
     config.messages.namespace = :event
 
     params do

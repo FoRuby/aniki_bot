@@ -1,19 +1,15 @@
 module Event::Response::Create
-  class Success < Shared::Response::Success
+  class Success < Event::Response::Show::Success
+    attr_reader :message
+
     def success_respond
-      respond_msg
-      return if respond_msg.dig(:result, :chat, :type) != 'supergroup'
-
-      bot.pin_chat_message(chat_id: respond_msg.dig(:result, :chat, :id),
-                           message_id: respond_msg.dig(:result, :message_id))
+      super
+      pin_message
     end
 
-    def respond_msg
-      @respond_msg ||= bot.send_message(render.merge(chat_id: chat_id)).deep_symbolize_keys
-    end
-
-    def render
-      Event::Render::Show.call(event: model, current_user: current_user)
+    def pin_message
+      bot.pin_chat_message chat_id: message.dig(:result, :chat, :id),
+                           message_id: message.dig(:result, :message_id)
     end
   end
 end

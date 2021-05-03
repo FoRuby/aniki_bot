@@ -1,11 +1,7 @@
 module Event::Response::Info
   class Success < Shared::Response::Success
     def success_respond
-      respond_msg
-    end
-
-    def respond_msg
-      @respond_msg ||= bot.send_message(render).deep_symbolize_keys
+      bot.send_message render
     end
 
     def render

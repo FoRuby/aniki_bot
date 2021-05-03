@@ -3,27 +3,30 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.0.0'
 
-gem 'action_policy'
 gem 'bootsnap', '>= 1.4.2', require: false
-gem 'enumerize'
-gem 'interactor'
-gem 'money-rails'
 gem 'pg'
 gem 'puma'
 gem 'rails'
-gem 'redis-rails'
-gem 'rolify'
 gem 'sass-rails'
-gem 'telegram-bot'
 
+# Redis
+gem 'redis'
+gem 'hiredis'
+
+
+gem 'action_policy'
 gem 'dry-validation'
+gem 'enumerize'
+gem 'money-rails'
 gem 'reform'
 gem 'reform-rails'
+gem 'rolify'
+gem 'telegram-bot'
 gem 'trailblazer'
-gem 'trailblazer-rails'
 gem 'trailblazer-developer'
+gem 'trailblazer-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

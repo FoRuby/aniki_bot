@@ -1,19 +1,19 @@
 class TelegramController < Telegram::Bot::UpdatesController
+  include Telegram::Bot::UpdatesController::MessageContext
+  include Telegram::Bot::UpdatesController::Session
+  include CallbackQueryContext
+
   before_action :authenticate_user!
   around_action :errors_handler
 
   attr_reader :current_user
-
-  include Telegram::Bot::UpdatesController::MessageContext
-  include Telegram::Bot::UpdatesController::Session
-  include CallbackQueryContext
-  use_session!
 
   include InfosController
   include FeedbacksController
   include EventsController
   include UsersController
   include ChangelogController
+  include ConfirmationController
 
   def action_missing(action, *_args)
     return unless action_type == :command

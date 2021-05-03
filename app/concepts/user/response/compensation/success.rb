@@ -9,7 +9,7 @@ module User::Response::Compensation
       I18n.t('telegram_webhooks.compensation_callback_query.success',
              user: current_user.tag,
              opponent: operation[:opponent].tag,
-             sum: operation[:compensation].format * -1)
+             sum: operation[:compensation].abs.format)
     end
   end
 end
