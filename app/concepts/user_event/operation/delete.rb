@@ -11,7 +11,8 @@ module UserEvent::Operation
     step :delete!
 
     def model!(options, params:, **)
-      options[:model] = UserEvent.find_by(event_id: params[:event_id], user_id: params[:user_id])
+      options[:model] = UserEvent.includes(:event)
+                                 .find_by(event_id: params[:event_id], user_id: params[:user_id])
     end
 
     def assign_event!(options, model:, **)

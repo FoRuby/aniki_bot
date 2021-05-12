@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :refill do
-    debt { debt }
+    association :debt, factory: :debt
     value { 300 }
     status { :created }
   end

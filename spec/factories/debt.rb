@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :debt do
-    borrower { create :user }
-    creditor { create :user }
+    association :borrower, factory: :user
+    association :creditor, factory: :user
     value { Faker::Number.decimal(l_digits: 2) }
     is_compensation { false }
 

@@ -29,17 +29,19 @@ RSpec.describe User, type: :model do
   end
 
   describe 'instance methods' do
+    let(:user) { create_default :user }
+
     describe '#tag' do
       subject { user.tag }
 
       describe 'user with username' do
-        let(:user) { create :user, username: 'foo' }
+        let(:user) { build :user, username: 'foo' }
 
         it { should eq '@foo' }
       end
 
       describe 'user without username' do
-        let(:user) { create :user, first_name: 'Alice', username: nil }
+        let(:user) { build :user, first_name: 'Alice', username: nil }
 
         it { should eq 'Alice' }
       end
@@ -47,7 +49,6 @@ RSpec.describe User, type: :model do
 
     describe '#top_borrower' do
       subject { user.top_borrower }
-      let(:user) { create :user }
 
       describe 'many borrowers' do
         let!(:debt1) { create :debt, creditor: user, value: 150 }
@@ -63,7 +64,6 @@ RSpec.describe User, type: :model do
 
     describe '#top_creditor' do
       subject { user.top_creditor }
-      let(:user) { create :user }
 
       describe 'many creditors' do
         let!(:debt1) { create :debt, borrower: user, value: 150 }
@@ -79,7 +79,6 @@ RSpec.describe User, type: :model do
 
     describe '#total_spend' do
       subject { user.total_spend }
-      let(:user) { create :user }
 
       describe 'many payments' do
         let!(:user_event1) { create :user_event, user: user, payment: 300 }
@@ -95,7 +94,6 @@ RSpec.describe User, type: :model do
 
     describe '#total_borrowed' do
       subject { user.total_borrowed }
-      let(:user) { create :user }
 
       describe 'many borrowers' do
         let!(:borrower1) { create :debt, creditor: user, value: 100 }
@@ -111,7 +109,6 @@ RSpec.describe User, type: :model do
 
     describe '#total_credited' do
       subject { user.total_credited }
-      let(:user) { create :user }
 
       describe 'many creditors' do
         let!(:creditor1) { create :debt, borrower: user, value: 150 }

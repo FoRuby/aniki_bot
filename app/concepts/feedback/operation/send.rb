@@ -3,7 +3,7 @@ module Feedback::Operation
     step :model!
     step :send_feedback
 
-    def model!(options, model:, **)
+    def model!(options, model: nil, **)
       options[:model] = model || options[:feedback]
     end
 

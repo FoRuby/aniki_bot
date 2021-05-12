@@ -2,7 +2,7 @@ module User::Response::Refill
   class Success < Shared::Response::Success
     attr_reader :refill
 
-    def initialize(current_user, operation, payload, session_payload: nil)
+    def initialize(current_user, operation, payload)
       super
       @refill = operation[:refill]
     end

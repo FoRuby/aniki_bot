@@ -3,7 +3,7 @@ module User::Render
     def render
       return if debts.empty?
 
-      @render ||= { text: text, parse_mode: 'html', reply_markup: reply_markup }
+      { text: text, parse_mode: 'html', reply_markup: reply_markup }
     end
 
     def text

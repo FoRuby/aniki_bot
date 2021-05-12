@@ -1,7 +1,7 @@
 module User::Render
   class Me < Shared::Render::Base
     def render
-      @render ||= { text: text, parse_mode: 'html', chat_id: current_user.chat_id, reply_markup: reply_markup }
+      { text: text, parse_mode: 'html', chat_id: current_user.chat_id, reply_markup: reply_markup }
     end
 
     def text

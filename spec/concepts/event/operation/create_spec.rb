@@ -1,20 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Event::Operation::Create do
-  let(:user) { create :user }
+  before_all do
+    @user = create :user
+  end
+  let(:user) { @user }
+
   subject(:operation) { described_class.call(params: params, current_user: user) }
 
   describe '.call' do
-    describe 'valid params' do
+    describe 'with valid params' do
       let(:params) { attributes_for :event }
 
-      it { is_expected.to be_success }
-      it { expect { operation }.to change(Event, :count).by(1) }
-      it { expect { operation }.to change(UserEvent, :count).by(1) }
-      it { expect(operation[:model].status).to eq :open }
-      it { expect(operation[:model].description).to eq '' }
-      it { expect(operation[:model].name).to eq params[:name] }
-      it { expect(operation[:model].date.strftime('%F %H:%M')).to eq params[:date] }
+      it { should be_success }
+      it 'should creates new records' do
+        expect { operation }
+          .to change(Event, :count).by(1)
+          .and change(UserEvent, :count).by(1)
+      end
+
+      it 'should assign attributes' do
+        expect(operation[:model].status).to eq :open
+        expect(operation[:model].description).to eq ''
+        expect(operation[:model].name).to eq params[:name]
+        expect(operation[:model].date.strftime('%F %H:%M')).to eq params[:date]
+      end
     end
 
     describe 'invalid params' do

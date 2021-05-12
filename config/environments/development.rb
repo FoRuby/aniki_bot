@@ -60,7 +60,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  ########################################
+  ############################################################
 
   # Configure cache store.
   config.cache_store = :redis_cache_store, { url: Rails.application.credentials.dig(:redis, :url) }
@@ -68,4 +68,15 @@ Rails.application.configure do
   # Configure session store for telegram bot.
   config.telegram_updates_controller.session_store = :redis_cache_store
   # config.telegram_updates_controller.session_store = :file_store, Rails.root.join('tmp', 'session_store')
+
+  # Bullet
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = true
+    Bullet.bullet_logger = true
+    Bullet.console       = true
+    # Bullet.growl         = true
+    Bullet.rails_logger  = true
+    Bullet.add_footer    = true
+  end
 end

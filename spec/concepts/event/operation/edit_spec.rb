@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Event::Operation::Edit do
-  let(:event_admin) { create :user }
-  let!(:event) do
-    Event::Operation::Create.call(current_user: event_admin, params: attributes_for(:event))[:model]
+  before_all do
+    @admin = create :user
+    @event = create :event, :with_admin, user: @admin
   end
+  let(:admin) { @admin }
+  let(:event) { @event }
 
   subject(:operation) { described_class.call(params: params, current_user: user) }
 
   describe '.call' do
+    let(:user) { admin }
+
     describe 'valid params' do
-      let(:user) { event_admin }
       let(:params) { { id: event.id } }
 
       it { should be_success }
@@ -19,7 +22,6 @@ RSpec.describe Event::Operation::Edit do
 
     describe 'invalid params' do
       describe 'event does not exist' do
-        let(:user) { event_admin }
         let(:params) { { id: 1234 } }
 
         it { should be_failure }
@@ -35,10 +37,10 @@ RSpec.describe Event::Operation::Edit do
       end
 
       describe 'closed event' do
-        before do
-          event.update(status: :close)
+        before_all do
+          @event = create :event, :close, :with_admin, user: @admin
         end
-        let(:user) { event_admin }
+
         let(:params) { { id: event.id } }
 
         it { should be_failure }

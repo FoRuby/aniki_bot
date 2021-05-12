@@ -9,9 +9,10 @@ To interact with bot, follow the [link](https://t.me/GachiBuhgalterBot) and clic
 1. To create event, run the command in Telegram group``/create_event <name> <date> <time>``. Example: ``/create_event Test Event 2020-10-10 10:00``.
    After that, the Event form will appear in the chat, with which the rest of the group can interact.
 2. Now other members of the group can join the event by clicking on the ``Join`` button, or leave it through the ``Leave`` button.
-3. Each event participant can pay for the event through the ``Pay`` button.
-4. Each event participant can view additional information about event through the ``Info`` button.
-5. Event creator(admin) can edit event information through the ``Edit`` button.
+3. Each event participant can view additional information about event through the ``Info`` button.
+4. Administrator can edit event information through the ``Edit`` button.
+5. Each event participant can pay for the event through the ``Pay`` button.
+6. Administrator can close the event through the ``Close`` button. After that, the bill for the event will be evenly distributed among its participants.
 
 ### Edit Event form
 This form is available to the event administrator.

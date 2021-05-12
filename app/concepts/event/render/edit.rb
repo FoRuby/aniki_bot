@@ -1,7 +1,7 @@
 module Event::Render
   class Edit < Event::Render::Show
     def render
-      @render ||= { text: text, chat_id: current_user.chat_id, parse_mode: 'html', reply_markup: reply_markup }
+      { text: text, chat_id: current_user.chat_id, parse_mode: 'html', reply_markup: reply_markup }
     end
 
     def reply_markup

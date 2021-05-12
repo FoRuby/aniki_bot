@@ -1,6 +1,7 @@
 en:
-  errors:
+  action_policy:
     unauthorized: You are not authorized to perform this action
+  errors:
     not_found: Record not found
   dry_validation:
     errors:
@@ -50,8 +51,10 @@ en:
       success: Event %{name} has been closed. See your finance statistic on /me => Finance
     compensation_callback_query:
       success: Compensation action between %{user} and %{opponent} complete. Compensation sum = %{sum}
-      opponent_message: User %{user} trying to compensate  %{sum}. Select OK to complete action
+      opponent_message: User %{user} trying to compensate %{sum}. Select Yes to complete action
       user_message: Sending message to %{opponent} to complete action
+    compensation_select_callback_query:
+      failure: You have not users to compensate
     bank_callback_query:
       failure: Something went wrong!
     pay_callback_query:
@@ -60,8 +63,14 @@ en:
       success: Enter event cost
     kick_callback_query:
       success: You kicked out %{value}
+    refill_select_callback_query:
+      failure: You have not Borrowers
+    kick_select_callback_query:
+      failure: No users to kick out
     add_admin_callback_query:
       success: You promote %{value}
+    add_admin_select_callback_query:
+      failure: No users to promote
     start:
       content: |
         Hello ma ♂BOY♂:

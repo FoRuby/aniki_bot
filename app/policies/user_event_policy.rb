@@ -4,7 +4,7 @@ class UserEventPolicy < ApplicationPolicy
   end
 
   def edit?
-    member?
+    own_record?
   end
 
   def update?
@@ -16,12 +16,16 @@ class UserEventPolicy < ApplicationPolicy
   end
 
   def add_admin?
-    member? || admin?
+    member? && admin?
   end
 
   private
 
   def member?
+    model.event.users.include? user
+  end
+
+  def own_record?
     model&.user == user
   end
 

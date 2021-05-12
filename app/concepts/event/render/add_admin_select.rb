@@ -1,7 +1,7 @@
 module Event::Render
   class AddAdminSelect < Event::Render::Base
     def render
-      @render ||= { text: text, parse_mode: 'html', reply_markup: reply_markup }
+      { text: text, parse_mode: 'html', reply_markup: reply_markup }
     end
 
     def text

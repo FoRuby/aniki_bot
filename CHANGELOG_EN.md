@@ -64,7 +64,7 @@
 * After entering Cost, the corresponding entry appears in the Event Bank
 * Added display of the number of event participants on the Event form
 
-# v_0.3.9
+# v_0.4
 * Added feature to call the /create_event command without arguments or by omitting some of them,
   example:
   - / create_event New Event Name
@@ -77,4 +77,6 @@
 * Fixed a bug when creating an event when the date format is not correct
 * The Bank form in the event has been replaced with the Info form, and now contains more information about the event, incl. event description, payments, admins
 * Redesigned the mechanism for closing the event, now the history of all operations with debts is saved
+* Reworked debt compensation mechanism
+* Added the Close button to the event form
 * Cost Operation has been sent for revision and is not yet available

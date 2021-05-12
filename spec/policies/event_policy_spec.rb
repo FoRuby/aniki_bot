@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe EventPolicy do
-  let(:policy) { described_class.new(user, model) }
-  let!(:event_admin) { create :user }
-  let!(:event_member) { create :user }
-  let(:model) do
-    Event::Operation::Create.call(
-      current_user: event_admin,
-      params: attributes_for(:event).merge(date: (Time.now + 1.day).strftime('%F %H:%M'))
-    )[:model]
+  before_all do
+    @admin = create :user
+    @event = create :event, :with_admin, user: @admin
+    @event_member = create :user
+    @user_event = create :user_event, event: @event, user: @event_member
   end
+  let(:event_admin) { @admin }
+  let(:model) { @event }
+  let(:event_member) { @event_member }
+  let(:policy) { described_class.new(user, model) }
 
   describe '#create?' do
     subject { policy.apply(:create?) }
@@ -29,12 +30,6 @@ RSpec.describe EventPolicy do
     subject { policy.apply(:update?) }
 
     describe 'event_member' do
-      before do
-        UserEvent::Operation::Create.call(current_user: event_member,
-                                          params: { event_id: model.id, user_id: event_member.id })[:model]
-
-      end
-
       let(:user) { event_member }
       it { should be_falsey }
     end
@@ -59,12 +54,6 @@ RSpec.describe EventPolicy do
     subject { policy.apply(:edit?) }
 
     describe 'event_member' do
-      before do
-        UserEvent::Operation::Create.call(current_user: event_member,
-                                          params: { event_id: model.id, user_id: event_member.id })[:model]
-
-      end
-
       let(:user) { event_member }
       it { should be_falsey }
     end
@@ -89,12 +78,6 @@ RSpec.describe EventPolicy do
     subject { policy.apply(:close?) }
 
     describe 'event_member' do
-      before do
-        UserEvent::Operation::Create.call(current_user: event_member,
-                                          params: { event_id: model.id, user_id: event_member.id })[:model]
-
-      end
-
       let(:user) { event_member }
       it { should be_falsey }
     end

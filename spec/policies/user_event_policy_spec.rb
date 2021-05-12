@@ -1,20 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe UserEventPolicy do
-  let!(:event_admin) { create :user }
-  let!(:event_member) { create :user }
-  let!(:event) do
-    Event::Operation::Create.call(
-      current_user: event_admin,
-      params: attributes_for(:event).merge(date: (Time.now + 1.day).strftime('%F %H:%M'))
-    )[:model]
+  before_all do
+    @admin = create :user
+    @event = create :event, :with_admin, user: @admin
+    @event_member = create :user
+    @user_event = create :user_event, event: @event, user: @event_member
   end
-  let!(:model) do
-    UserEvent::Operation::Create.call(current_user: event_member,
-                                      params: { event_id: event.id, user_id: event_member.id })[:model]
-  end
+  let(:event_admin) { @admin }
+  let(:event) { @event }
+  let(:event_member) { @event_member }
+  let(:model) { @user_event }
   let(:policy) { described_class.new(user, model) }
-
 
   describe '#create?' do
     subject { policy.apply(:create?) }

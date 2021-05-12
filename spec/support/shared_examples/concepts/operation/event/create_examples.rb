@@ -1,5 +1,8 @@
 shared_examples_for 'invalid create event operation' do
   it { should be_failure }
-  it { expect { subject }.to_not change(Event, :count) }
-  it { expect { subject }.to_not change(UserEvent, :count) }
+  it 'should not creates new records' do
+    expect { subject }
+      .to change(Event, :count).by(0)
+      .and change(UserEvent, :count).by(0)
+  end
 end

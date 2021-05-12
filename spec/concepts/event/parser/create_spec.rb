@@ -1,42 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe Event::Parser::Create do
-  subject(:parser) { described_class.call(params) }
+  let(:parser) { described_class.new(params) }
 
-  describe '.call' do
-    describe 'valid' do
-      let(:params) { %w[EventName 2021-11-11 19:00] }
+  describe 'params' do
+    let(:params) { %w[Foobar 2021-11-11 19:00] }
 
-      it { expect(parser[:name]).to eq 'EventName' }
-      it { expect(parser[:date]).to eq '2021-11-11 19:00' }
-    end
+    it { expect(parser.name).to eq 'Foobar' }
+    it { expect(parser.date).to eq '2021-11-11 19:00' }
+    it { expect(parser.parse).to include(name: 'Foobar', date: '2021-11-11 19:00') }
+  end
 
-    describe 'valid without date' do
-      let(:params) { %w[New event name] }
+  describe 'params without name' do
+    let(:params) { %w[2021-11-11 19:00] }
 
-      it { expect(parser[:name]).to eq 'New event name' }
-      it { expect(parser[:date]).to eq (Time.now + 1.hour).beginning_of_hour.strftime('%F %H:%M') }
-    end
+    it { expect(parser.name).to eq 'New Event' }
+    it { expect(parser.date).to eq '2021-11-11 19:00' }
+    it { expect(parser.parse).to include(name: 'New Event', date: '2021-11-11 19:00') }
+  end
 
-    describe 'valid without date' do
-      let(:params) { %w[New event name 19:00] }
+  describe 'params without name & date' do
+    let(:params) { %w[19:00] }
 
-      it { expect(parser[:name]).to eq 'New event name' }
-      it { expect(parser[:date]).to eq "#{Date.today} 19:00" }
-    end
+    it { expect(parser.name).to eq 'New Event' }
+    it { expect(parser.date).to eq "#{Time.zone.now.to_date} 19:00" }
+    it { expect(parser.parse).to include(name: 'New Event', date: "#{Time.zone.now.to_date} 19:00") }
+  end
 
-    describe 'valid without name' do
-      let(:params) { %w[2021-11-11 19:00] }
+  describe 'params without name & date & datetime' do
+    let(:params) { %w[] }
+    let(:date) { "#{Time.zone.now.to_date} #{(Time.zone.now + 1.hour).beginning_of_hour.strftime('%H:%M')}" }
 
-      it { expect(parser[:name]).to eq 'New Event' }
-      it { expect(parser[:date]).to eq '2021-11-11 19:00' }
-    end
-
-    describe 'valid without params' do
-      let(:params) { [] }
-
-      it { expect(parser[:name]).to eq 'New Event' }
-      it { expect(parser[:date]).to eq (Time.now + 1.hour).beginning_of_hour.strftime('%F %H:%M') }
-    end
+    it { expect(parser.name).to eq 'New Event' }
+    it { expect(parser.date).to eq date }
+    it { expect(parser.parse).to include(name: 'New Event', date: date) }
   end
 end

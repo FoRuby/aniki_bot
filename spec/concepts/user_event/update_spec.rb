@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe UserEvent::Operation::Update do
-  let(:event_admin) { create :user }
-  let(:event_member) { create :user }
-  let!(:event) do
-    Event::Operation::Create.call(current_user: event_admin, params: attributes_for(:event))[:model]
+  before_all do
+    @admin = create :user
+    @event = create :event, :with_admin, user: @admin
+    @event_member = create :user
+    @user_event = create :user_event, event: @event, user: @event_member
   end
-  let!(:user_event) do
-    UserEvent::Operation::Create.call(current_user: event_member,
-                                      params: { user_id: event_member.id, event_id: event.id })[:model]
-  end
+  let(:admin) { @admin }
+  let(:event) { @event }
+  let(:event_member) { @event_member }
+  let(:user_event) { @user_event }
 
   describe '.call' do
     subject(:operation) { described_class.call(params: params, current_user: user) }
@@ -17,7 +18,7 @@ RSpec.describe UserEvent::Operation::Update do
     describe 'valid params' do
       describe 'payment as Money object' do
         let(:user) { event_member }
-        let(:params) { { user_id: user.id, event_id: event.id, payment: Money.new(33_333, 'RUB') } }
+        let(:params) { { user_id: user.id, event_id: event.id, payment: Money.new(333_33, 'RUB') } }
 
         it { should be_success }
         it { expect(operation[:model].payment.format).to eq '333.33 ₽' }
@@ -32,9 +33,9 @@ RSpec.describe UserEvent::Operation::Update do
       end
 
       describe 'accelerate payment' do
-        before do
-          UserEvent::Operation::Update.call(current_user: event_member,
-                                            params: { payment: 300, user_id: event_member.id, event_id: event.id })
+        before_all do
+          @event_member = create :user
+          @user_event = create :user_event, event: @event, user: @event_member, payment: 300
         end
 
         let(:user) { event_member }
@@ -64,13 +65,13 @@ RSpec.describe UserEvent::Operation::Update do
       end
 
       describe 'negative second payment' do
+        before_all do
+          @event_member = create :user
+          @user_event = create :user_event, event: @event, user: @event_member, payment: 300
+        end
+
         let(:user) { event_member }
         let(:params) { { user_id: user.id, event_id: event.id, payment: -200 } }
-
-        before do
-          UserEvent::Operation::Update.call(current_user: event_member,
-                                            params: { payment: 300, user_id: event_member.id, event_id: event.id })
-        end
 
         it { should be_success }
         it { expect(operation[:model].payment.format).to eq '100.00 ₽' }
@@ -86,7 +87,12 @@ RSpec.describe UserEvent::Operation::Update do
         end
 
         describe 'closed event' do
-          before { event.update(status: :close) }
+          before_all do
+            @admin = create :user
+            @event = create :event, :close, :with_admin, user: @admin
+            @event_member = create :user
+            @user_event = create :user_event, event: @event, user: @event_member
+          end
 
           let(:user) { event_member }
           let(:params) { { user_id: event_member.id, event_id: event.id, payment: 300 } }

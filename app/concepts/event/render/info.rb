@@ -1,13 +1,14 @@
 module Event::Render
   class Info < Event::Render::Base
     def render
-      @render ||= { text: text, chat_id: current_user.chat_id }
+      { text: text, chat_id: current_user.chat_id }
     end
 
     def text
       "Event info:\n" \
       "ID: #{event.id}\n" \
       "Name: #{event.name}\n" \
+      "Status: #{event.status}\n" \
       "#{event.description.present? ? "Description: \n#{event.description}\n" : ''}" \
       "Date: #{event.date.to_formatted_s(:long)}\n" \
       "Admins(#{event.admins.count}): #{event.admins.map(&:tag).join(' ')}\n" \

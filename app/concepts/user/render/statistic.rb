@@ -1,7 +1,7 @@
 module User::Render
   class Statistic < Shared::Render::Base
     def render
-      @render ||= { text: text, chat_id: current_user.chat_id }
+      { text: text, chat_id: current_user.chat_id }
     end
 
     def text

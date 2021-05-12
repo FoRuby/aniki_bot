@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Event::Operation::Update do
-  let(:event_admin) { create :user }
-  let!(:event) do
-    Event::Operation::Create.call(current_user: event_admin, params: attributes_for(:event))[:model]
+  before_all do
+    @admin = create :user
+    @event = create :event, :with_admin, user: @admin
   end
+  let(:admin) { @admin }
+  let(:event) { @event }
 
   subject(:operation) { described_class.call(current_user: user, params: params) }
 
   describe '.call' do
+    let(:user) { admin }
+
     describe 'valid params' do
-      let(:user) { event_admin }
       let(:params) { attributes_for(:event).merge({ id: event.id }) }
 
       it { should be_success }
@@ -18,8 +21,6 @@ RSpec.describe Event::Operation::Update do
     end
 
     describe 'invalid params' do
-      let(:user) { event_admin }
-
       describe 'event does not exist' do
         let(:params) { attributes_for(:event).merge({ id: 1234 }) }
 
@@ -35,35 +36,33 @@ RSpec.describe Event::Operation::Update do
         it { expect(operation['result.policy.default']).to be }
       end
 
-      describe 'closed event' do
-        before do
-          event.update(status: :close)
-        end
-        let(:params) { attributes_for(:event).merge({ id: event.id }) }
-
-        it { should be_failure }
-        it { expect(operation_errors(operation)).to include 'Event is already close' }
-      end
-
       describe 'empty event name' do
         let(:params) { attributes_for(:event).merge({ id: event.id, name: '' }) }
 
+        it { should be_failure }
         it { expect(operation_errors(operation)).to include 'Name must be filled' }
-        it_behaves_like 'invalid update event operation'
       end
 
       describe 'invalid date format' do
         let(:params) { { id: event.id, name: 'test', date: 'foobar' } }
 
+        it { should be_failure }
         it { expect(operation_errors(operation)).to include 'Date must be a time' }
-        it_behaves_like 'invalid update event operation'
       end
 
       describe 'invalid past date' do
         let(:params) { attributes_for(:event, :past).merge({ id: event.id }) }
 
+        it { should be_failure }
         it { expect(operation_errors(operation)).to include 'Date must be in future' }
-        it_behaves_like 'invalid update event operation'
+      end
+
+      describe 'closed event' do
+        let!(:event) { create :event, :close, :with_admin, user: admin }
+        let(:params) { attributes_for(:event).merge({ id: event.id }) }
+
+        it { should be_failure }
+        it { expect(operation_errors(operation)).to include 'Event is already close' }
       end
     end
   end

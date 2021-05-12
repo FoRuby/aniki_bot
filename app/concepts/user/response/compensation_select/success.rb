@@ -5,12 +5,13 @@ module User::Response::CompensationSelect
         bot.send_message(render.merge(chat_id: chat_id))
       else
         bot.answer_callback_query callback_query_id: payload[:id],
-                                  text: 'You have not users to compensate', show_alert: true
+                                  text: I18n.t('telegram_webhooks.compensation_select_callback_query.failure'),
+                                  show_alert: true
       end
     end
 
     def render
-      User::Render::CompensationSelect.call(current_user: current_user)
+      @render ||= User::Render::CompensationSelect.call(current_user: current_user)
     end
   end
 end

@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe User::Operation::Update do
+  before_all do
+    @user = create :user
+  end
+  let(:user) { @user }
+
   subject(:operation) { described_class.call(params: params) }
 
   describe '.call' do
-    let!(:user) { create :user }
-
     context 'valid params' do
       let(:params) { attributes_for :user, chat_id: user.chat_id }
 
       it { should be_success }
-      it 'should change user attributes' do
+      it 'should assign new user attributes' do
         operation
         expect(operation[:model].first_name).to eq params[:first_name]
         expect(operation[:model].last_name).to eq params[:last_name]

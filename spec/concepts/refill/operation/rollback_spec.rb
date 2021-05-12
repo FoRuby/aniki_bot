@@ -1,18 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe Refill::Operation::Rollback do
-  describe '.call' do
-    let!(:debt) { create :debt, value: 300 }
-    subject(:operation) { described_class.call(params: params) }
+  before_all do
+    @debt = create :debt, value: 300
+  end
+  let(:debt) { @debt }
 
+  subject(:operation) { described_class.call(params: params) }
+  describe '.call' do
     describe 'valid params' do
       describe 'update Debt +' do
         let!(:refill) { create :refill, value: 100, debt: debt }
         let(:params) { { id: refill.id } }
 
         it { should be_success }
-        it { expect(operation[:debt].value.format).to eq '200.00 ₽' }
-        it { expect(operation[:refill].status).to eq :rollback }
+        it 'should assign attributes' do
+          expect(operation[:debt].value.format).to eq '200.00 ₽'
+          expect(operation[:refill].status).to eq :rollback
+        end
       end
 
       describe 'update Debt -' do
@@ -20,8 +25,10 @@ RSpec.describe Refill::Operation::Rollback do
         let(:params) { { id: refill.id } }
 
         it { should be_success }
-        it { expect(operation[:debt].value.format).to eq '400.00 ₽' }
-        it { expect(operation[:refill].status).to eq :rollback }
+        it 'should assign attributes' do
+          expect(operation[:debt].value.format).to eq '400.00 ₽'
+          expect(operation[:refill].status).to eq :rollback
+        end
       end
     end
 
@@ -31,9 +38,11 @@ RSpec.describe Refill::Operation::Rollback do
         let(:params) { { id: refill.id } }
 
         it { should be_failure }
-        it { expect(operation[:debt].value.format).to eq '300.00 ₽' }
+        it 'should assign attributes' do
+          expect(operation[:debt].value.format).to eq '300.00 ₽'
+          expect(operation[:refill].status).to eq :created
+        end
         it { expect(operation_errors(operation)).to include 'Value invalid, Debt sum must be greater then 0' }
-        it { expect(operation[:refill].status).to eq :created }
       end
     end
   end

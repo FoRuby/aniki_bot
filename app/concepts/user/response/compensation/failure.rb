@@ -11,7 +11,7 @@ module User::Response::Compensation
         text: I18n.t('telegram_webhooks.compensation_callback_query.opponent_message',
                      user: current_user.tag,
                      sum: operation[:compensation].abs.format),
-        positive_callback: "compensation:#{current_user.id}"
+        positive_callback: { callback_data: "compensation:#{current_user.id}" }
       )
     end
 
