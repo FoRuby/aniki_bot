@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.0'
+ruby '3.0.1'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg'
@@ -14,7 +14,6 @@ gem 'sass-rails'
 # Redis
 gem 'hiredis'
 gem 'redis'
-
 
 gem 'action_policy'
 gem 'dry-validation'
