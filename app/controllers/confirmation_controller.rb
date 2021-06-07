@@ -4,7 +4,7 @@ module ConfirmationController
   end
 
   def negative_confirmation_callback_query(*)
-    payload.deep_symbolize_keys!
-    bot.delete_message chat_id: payload.dig(:message, :chat, :id), message_id: payload.dig(:message, :message_id)
+    p = payload.deep_symbolize_keys
+    bot.delete_message chat_id: p.dig(:message, :chat, :id), message_id: p.dig(:message, :message_id)
   end
 end
